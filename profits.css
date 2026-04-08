@@ -1,0 +1,226 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI, Arial;
+}
+
+body{
+display:flex;
+background:#f4f6f5;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:250px;
+background:#1e4d3b;
+color:white;
+height:100vh;
+padding:25px;
+}
+
+.logo{
+font-size:24px;
+font-weight:bold;
+margin-bottom:5px;
+}
+
+.menu{
+margin-top:25px;
+}
+
+.menu li{
+list-style:none;
+padding:12px 15px;
+margin-bottom:10px;
+border-radius:10px;
+cursor:pointer;
+transition:0.2s;
+}
+
+.menu li:hover{
+background:#2d6d56;
+}
+
+.menu li.active{
+background:#2d6d56;
+}
+
+/* MAIN */
+
+.main{
+flex:1;
+padding:35px;
+}
+
+/* HEADER */
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.top h1{
+font-size:28px;
+}
+
+.search{
+padding:12px 18px;
+border-radius:25px;
+border:1px solid #ddd;
+width:300px;
+background:white;
+}
+
+/* CONTROLS */
+
+.controls{
+margin-top:15px;
+}
+
+select{
+padding:8px 12px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+/* TOTAL STORE */
+
+.totalStore{
+background:white;
+padding:18px;
+border-radius:12px;
+margin-top:20px;
+font-weight:bold;
+box-shadow:0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* CARDS */
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:20px;
+margin-top:25px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:14px;
+cursor:pointer;
+text-align:center;
+box-shadow:0 2px 6px rgba(0,0,0,0.05);
+min-height:140px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+transition:0.2s;
+}
+
+.card:hover{
+transform:translateY(-4px);
+}
+
+.card h2{
+font-size:22px;
+margin-bottom:6px;
+}
+
+.profit{
+color:#1e4d3b;
+font-size:14px;
+}
+
+/* TABLE VIEW */
+
+#tableView{
+display:none;
+margin-top:25px;
+}
+
+.headerRow{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+}
+
+.headerRow button{
+background:#1e4d3b;
+color:white;
+border:none;
+padding:8px 14px;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* REPORT FILTER */
+
+.reportWrap{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.reportLabel{
+font-weight:bold;
+}
+
+.reportBtn{
+padding:8px 12px;
+border-radius:6px;
+border:1px solid #ccc;
+background:white;
+}
+
+/* TABLE */
+
+.tableContainer{
+background:white;
+border-radius:12px;
+max-height:420px;
+overflow:auto;
+box-shadow:0 2px 6px rgba(0,0,0,0.05);
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+padding:10px;
+text-align:center;
+border-bottom:1px solid #eee;
+}
+
+thead{
+background:#f3f3f3;
+position:sticky;
+top:0;
+}
+
+/* CHART */
+
+.chartBox{
+background:white;
+border-radius:12px;
+padding:20px;
+margin-top:20px;
+box-shadow:0 2px 6px rgba(0,0,0,0.05);
+}
+
+.topProduct{
+margin-top:10px;
+font-weight:bold;
+color:#1e4d3b;
+}
+
+.summary{
+font-weight:bold;
+margin-top:5px;
+}

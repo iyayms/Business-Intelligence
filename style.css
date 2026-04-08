@@ -1,0 +1,177 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,Arial;
+}
+
+body{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+background:#f4f6f5;
+}
+
+.container{
+width:380px;
+padding:40px;
+background:white;
+border-radius:14px;
+text-align:center;
+box-shadow:0 6px 20px rgba(0,0,0,0.08);
+position:relative;
+}
+
+h3{
+margin-bottom:20px;
+color:#1e4d3b;
+}
+
+/* INPUT */
+.inputBox{
+position:relative;
+margin:15px 0;
+}
+
+.inputBox input{
+width:100%;
+padding:12px;
+border-radius:8px;
+border:1px solid #ccc;
+background:#fafafa;
+outline:none;
+}
+
+.inputBox label{
+position:absolute;
+left:12px;
+top:12px;
+font-size:13px;
+color:#777;
+background:white;
+padding:0 4px;
+transition:.2s;
+}
+
+.inputBox input:focus + label,
+.inputBox input:not(:placeholder-shown) + label{
+top:-7px;
+font-size:11px;
+color:#1e4d3b;
+}
+
+.toggle{
+position:absolute;
+right:10px;
+top:12px;
+cursor:pointer;
+}
+
+/* BUTTON */
+.btn{
+background:#1e4d3b;
+color:white;
+border:none;
+padding:10px 25px;
+border-radius:20px;
+margin:10px 5px;
+cursor:pointer;
+font-weight:600;
+}
+
+.btn:hover{
+background:#2d6d56;
+}
+
+.back{
+position:absolute;
+left:15px;
+top:15px;
+background:#e74c3c;
+border:none;
+color:white;
+padding:5px 10px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.link{
+margin-top:10px;
+cursor:pointer;
+color:#1e4d3b;
+font-size:13px;
+}
+
+.message{
+font-size:13px;
+margin:10px 0;
+height:18px;
+font-weight:bold;
+}
+
+.success{color:#2ecc71;}
+.error{color:#e74c3c;}
+.warning{color:#555;}
+
+.hidden{display:none;}
+
+.successAnim{
+animation:pop .4s ease;
+}
+
+/* ERROR INPUT */
+.inputError{
+border:1px solid #e74c3c !important;
+background:#fff5f5;
+}
+
+/* SHAKE ANIMATION */
+.shake{
+animation:shake .3s;
+}
+
+@keyframes shake{
+0%{transform:translateX(0)}
+25%{transform:translateX(-5px)}
+50%{transform:translateX(5px)}
+75%{transform:translateX(-5px)}
+100%{transform:translateX(0)}
+}
+
+/* DISABLED BUTTON */
+.btn:disabled{
+background:#aaa;
+cursor:not-allowed;
+}
+
+@keyframes pop{
+0%{transform:scale(.8);opacity:0}
+100%{transform:scale(1);opacity:1}
+}
+
+/* OTP */
+.otpBoxes{
+display:flex;
+justify-content:center;
+gap:10px;
+margin:20px 0;
+}
+
+.otpBoxes input{
+width:45px;
+height:45px;
+font-size:20px;
+text-align:center;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+/* LOADING */
+.loading{
+animation:blink 1s infinite;
+}
+
+@keyframes blink{
+50%{opacity:.4}
+}

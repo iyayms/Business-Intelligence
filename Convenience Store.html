@@ -1,0 +1,145 @@
+<?php
+include "db.php";
+session_start();
+
+$otp = "1234";
+
+// SIGN UP
+if(isset($_POST['signup'])){
+    $u = $_POST['su_username'];
+    $p = $_POST['su_password'];
+    $c = $_POST['su_confirm'];
+
+    if($p == $c){
+        $p = password_hash($p, PASSWORD_DEFAULT);
+        $conn->query("INSERT INTO users(username,password) VALUES('$u','$p')");
+        $_SESSION['user'] = $u;
+        echo "<script>show('verifyPage');</script>";
+    } else {
+        echo "Password mismatch";
+    }
+}
+
+// VERIFY
+if(isset($_POST['verify'])){
+    $phone = $_POST['phone'];
+    $code = $_POST['code'];
+
+    if($code == $otp){
+        $user = $_SESSION['user'];
+        $conn->query("UPDATE users SET phone='$phone', verified=1 WHERE username='$user'");
+        echo "<script>alert('Account Verified!');</script>";
+    } else {
+        echo "<script>alert('Invalid Code');</script>";
+    }
+}
+
+// LOGIN
+if(isset($_POST['login'])){
+    $u = $_POST['username'];
+    $p = $_POST['password'];
+
+    $res = $conn->query("SELECT * FROM users WHERE username='$u'");
+    $row = $res->fetch_assoc();
+
+    if($row && password_verify($p, $row['password'])){
+        if($row['verified']){
+            echo "<script>alert('Login Success');</script>";
+        } else {
+            echo "<script>alert('Please verify your account');</script>";
+        }
+    } else {
+        echo "<script>alert('Invalid login');</script>";
+    }
+}
+?>
+
+<?php include "db.php"; ?>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Auth System</title>
+<style>
+body {
+    background:#c8ab7c;
+    text-align:center;
+    font-family:Arial;
+}
+.container {
+    width:300px;
+    margin:40px auto;
+    padding:20px;
+    background:#c5c45f;
+    border:2px solid black;
+}
+input {
+    width:90%;
+    padding:10px;
+    margin:10px;
+    background:#59c3a5;
+    border-radius:6px;
+    text-align:center;
+}
+button {
+    background:#ff6b6b;
+    padding:8px 20px;
+    border-radius:20px;
+    cursor:pointer;
+}
+.hidden { display:none; }
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN PAGE (FIRST PAGE) -->
+<div id="loginPage">
+<h1>LOG IN</h1>
+<div class="container">
+<form method="POST">
+<input name="username" placeholder="USERNAME">
+<input type="password" name="password" placeholder="PASSWORD">
+<br>
+<button name="login">LOG IN</button>
+<button type="button" onclick="show('signupPage')">SIGN UP</button>
+</form>
+</div>
+</div>
+
+<!-- SIGN UP -->
+<div id="signupPage" class="hidden">
+<h1>Sign up</h1>
+<div class="container">
+<form method="POST">
+<input name="su_username" placeholder="USERNAME">
+<input type="password" name="su_password" placeholder="PASSWORD">
+<input type="password" name="su_confirm" placeholder="CONFIRM PASSWORD">
+<button name="signup">Register</button>
+</form>
+</div>
+</div>
+
+<!-- VERIFICATION -->
+<div id="verifyPage" class="hidden">
+<h1>VERIFICATION CODE</h1>
+<div class="container">
+<form method="POST">
+<input name="phone" placeholder="PHONE NUMBER">
+<input name="code" placeholder="CODE">
+<button name="verify">VERIFY</button>
+</form>
+</div>
+</div>
+
+<script>
+function show(page){
+    document.getElementById("loginPage").classList.add("hidden");
+    document.getElementById("signupPage").classList.add("hidden");
+    document.getElementById("verifyPage").classList.add("hidden");
+
+    document.getElementById(page).classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>

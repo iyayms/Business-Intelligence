@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Store Profit Dashboard</title>
+
+<link rel="stylesheet" href="profits.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="sidebar">
+<div class="logo">STORE</div>
+<ul class="menu">
+<li>Dashboard</li>
+<li>Sales Overview</li>
+<li>Stocks</li>
+<li>Order History</li>
+<li class="active">Profits</li>
+<li>Inventory</li>
+</ul>
+</div>
+
+<div class="main">
+
+<div class="top">
+<h1>Profits</h1>
+<input id="search" class="search" placeholder="Search category">
+</div>
+
+<div class="controls">
+
+<select id="filter">
+<option value="all">All</option>
+<option value="low">Below 5%</option>
+<option value="mid">5-10%</option>
+<option value="high">Above 10%</option>
+</select>
+
+<select id="profitRange" onchange="updateStoreProfit()">
+<option value="daily">Daily Profit</option>
+<option value="weekly">Weekly Profit</option>
+<option value="monthly">Monthly Profit</option>
+</select>
+
+</div>
+
+<div class="totalStore" id="storeProfit"></div>
+
+<div class="cards" id="grid"></div>
+
+<div id="tableView">
+
+<div class="headerRow">
+
+<div>
+<button onclick="showCards()">←</button>
+<span id="categoryTitle"></span>
+</div>
+
+<div class="reportWrap">
+<span class="reportLabel">Frequency Report</span>
+<select id="reportType" class="reportBtn" onchange="reloadTable()">
+<option value="daily">Daily</option>
+<option value="weekly">Weekly</option>
+<option value="monthly">Monthly</option>
+</select>
+</div>
+
+</div>
+
+<div class="topProduct" id="topProduct"></div>
+<div class="summary" id="summary"></div>
+
+<div class="tableContainer">
+<table>
+<thead>
+<tr>
+<th>Product</th>
+<th>Size</th>
+<th>SRP</th>
+<th>Price</th>
+<th>Sales</th>
+<th>Profit</th>
+</tr>
+</thead>
+<tbody id="tableBody"></tbody>
+</table>
+</div>
+
+<div class="chartBox">
+<h3>Profit per Product</h3>
+<canvas id="profitChart"></canvas>
+</div>
+
+<div class="chartBox">
+<h3>Top 5 Most Profitable Products</h3>
+<canvas id="topChart"></canvas>
+</div>
+
+<div class="chartBox">
+<h3>Profit Trend</h3>
+<canvas id="trendChart"></canvas>
+</div>
+
+<div class="chartBox">
+<h3>Profit Distribution by Category</h3>
+<canvas id="categoryChart"></canvas>
+</div>
+
+</div>
+</div>
+
+<script src="profits.js"></script>
+
+</body>
+</html>

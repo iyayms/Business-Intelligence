@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Auth System</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login" class="container">
+<h3>WELCOME, KA-SUKI</h3>
+
+<div class="inputBox">
+<input id="loginUser" placeholder=" ">
+<label>Username</label>
+</div>
+
+<div class="inputBox">
+<input id="loginPass" type="password" placeholder=" ">
+<label>Password</label>
+<span class="toggle" onclick="togglePass('loginPass')">👁</span>
+</div>
+
+<div id="loginMsg" class="message"></div>
+
+<button class="btn" onclick="login()">LOG IN</button>
+<button class="btn" onclick="showPage('signup')">SIGN UP</button>
+
+<div class="link" onclick="showPage('forgotPhone')">Forgot Password?</div>
+</div>
+
+<!-- SIGNUP -->
+<div id="signup" class="container hidden">
+<button class="back" onclick="showPage('login')">Back</button>
+
+<h3>Create Account</h3>
+
+<div class="inputBox">
+<input id="suUser" placeholder=" ">
+<label>Username</label>
+</div>
+
+<div class="inputBox">
+<input id="suPass" type="password" placeholder=" ">
+<label>Password</label>
+<span class="toggle" onclick="togglePass('suPass')">👁</span>
+</div>
+
+<div id="strengthMsg" class="message"></div>
+
+<div class="inputBox">
+<input id="suConfirm" type="password" placeholder=" ">
+<label>Confirm Password</label>
+<span class="toggle" onclick="togglePass('suConfirm')">👁</span>
+</div>
+
+<div id="signupMsg" class="message"></div>
+
+<button class="btn" onclick="signup()">Register</button>
+</div>
+
+<!-- EMAIL -->
+<div id="forgotEmail" class="container hidden">
+<button class="back" onclick="showPage('login')">Back</button>
+
+<h3>Enter Email</h3>
+
+<div class="inputBox">
+<input id="fpEmail" placeholder=" ">
+<label>Email</label>
+</div>
+
+<div id="emailMsg" class="message"></div>
+
+<button class="btn" onclick="sendOTP()">Send OTP</button>
+</div>
+
+<!-- OTP -->
+<div id="otpPage" class="container hidden">
+<button class="back" onclick="showPage('forgotEmail')">Back</button>
+
+<h3>Enter OTP</h3>
+
+<div class="otpBoxes">
+<input maxlength="1" oninput="move(this,1)">
+<input maxlength="1" oninput="move(this,2)">
+<input maxlength="1" oninput="move(this,3)">
+<input maxlength="1">
+</div>
+
+<div id="otpMsg" class="message"></div>
+
+<button class="btn" onclick="verifyOTP()">Verify</button>
+
+<div id="resendBox">
+Resend OTP in <span id="timer">30</span>s
+</div>
+
+<button class="btn hidden" id="resendBtn" onclick="resendOTP()">Resend OTP</button>
+</div>
+
+<!-- RESET -->
+<div id="reset" class="container hidden">
+<h3>Create New Password</h3>
+
+<div class="inputBox">
+<input id="newPass" type="password" placeholder=" ">
+<label>New Password</label>
+</div>
+
+<div class="inputBox">
+<input id="confirmNewPass" type="password" placeholder=" ">
+<label>Confirm Password</label>
+</div>
+
+<div id="resetMsg" class="message"></div>
+
+<button class="btn" onclick="resetPassword()">Done</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
