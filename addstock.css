@@ -1,4 +1,3 @@
-/* --- GLOBAL STYLES --- */
 * {
     margin: 0;
     padding: 0;
@@ -15,7 +14,7 @@ body {
     height: 100vh;
 }
 
-/* --- SIDEBAR --- */
+/* SIDEBAR */
 .sidebar {
     width: 220px;
     background: #2f5b4a;
@@ -38,7 +37,6 @@ body {
     margin: 6px 0;
     cursor: pointer;
     border-radius: 20px;
-    transition: 0.3s;
 }
 
 .sidebar li:hover {
@@ -53,19 +51,13 @@ body {
 
 .submenu {
     margin-left: 20px;
-    margin-bottom: 10px;
-}
-
-.submenu li {
     font-size: 14px;
-    padding: 8px 10px;
 }
 
-/* --- MAIN CONTENT --- */
+/* MAIN AREA */
 .main {
     flex: 1;
     padding: 30px;
-    overflow-y: auto;
 }
 
 .header {
@@ -87,32 +79,23 @@ body {
     outline: none;
 }
 
-/* --- TABLES CONTAINER --- */
+/* MAIN CONTAINER WITH 2PX BORDER */
 .tables-container {
     background: white;
     padding: 20px;
-    border-radius: 14px;
+    border-radius: 16px;
     box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-    border: 2px solid #000;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
 }
 
 .table-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
-    width: 100%;
-}
-
-.title-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.back-arrow {
-    font-size: 20px;
-    font-weight: bold;
+    width: 95%;
+    margin: 0 auto 15px auto;
 }
 
 .title-text {
@@ -122,7 +105,7 @@ body {
     letter-spacing: 1px;
 }
 
-/* --- ADD BUTTON (RIGHT SIDE) --- */
+/* PILL BUTTONS */
 .add-btn {
     display: flex;
     align-items: center;
@@ -144,29 +127,24 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
 }
 
-.add-btn:hover {
-    background: #f5f5f5;
-}
-
-/* --- FILTER BAR --- */
+/* FILTER BAR */
 .filter-bar {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
-    margin-bottom: 15px;
+    width: 95%;
+    margin: 0 auto 15px auto;
 }
 
-.filter-bar input,
-.filter-bar select {
+.filter-bar input, .filter-bar select {
     padding: 8px 14px;
     border-radius: 25px;
     border: 1px solid #bbb;
     font-size: 13px;
-    background: white;
     outline: none;
+    background: white;
 }
 
 .input-icon {
@@ -178,46 +156,52 @@ body {
     left: 10px;
     top: 50%;
     transform: translateY(-50%);
-    color: #777;
+    color: #888;
 }
 
 .input-icon input {
     padding-left: 30px;
 }
 
-/* --- TABLE STYLES --- */
+/* TABLE SCROLL & 95% WIDTH */
 .table-scroll {
     width: 100%;
-    max-height: 400px;
-    overflow-y: auto;
-    border-radius: 8px;
+    overflow-x: auto;
 }
 
 table {
-    width: 100%;
+    width: 95%;
+    margin: 0 auto;
     border-collapse: collapse;
 }
 
 thead th {
-    position: sticky;
-    top: 0;
     background: #d9b062;
-    color: black;
-    font-weight: 600;
-    padding: 12px;
+    padding: 10px;
     border: 1px solid #000;
     text-align: left;
-    z-index: 10;
+    font-weight: 600;
 }
 
 td {
     padding: 10px;
     border: 1px solid #000;
     font-size: 13px;
-    text-align: left;
+    background: white;
 }
 
-/* --- LOW STOCK ANIMATION --- */
+/* QUICK ACTION BUTTON */
+.action-btn {
+    background: #2f5b4a;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* LOW STOCK BLINKING */
 .lowStock {
     background: #ffefef;
     color: #c40000;
@@ -230,113 +214,84 @@ td {
     to { opacity: 0.5; }
 }
 
-/* --- ACTION BUTTONS (IN TABLE) --- */
-.action-btn {
-    border: none;
-    padding: 6px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.edit {
-    background: #2f5b4a;
-    color: white;
-}
-
-/* --- MODAL STYLES --- */
+/* MODALS */
 .modal {
     display: none;
     position: fixed;
-    z-index: 999;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    z-index: 1000;
+    top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.5);
     align-items: center;
     justify-content: center;
 }
 
-/* --- MODAL DESIGN MATCHING YOUR IMAGE --- */
 .modal-content {
     background: white;
-    width: 450px; /* Slightly wider for the longer button text */
+    width: 440px;
     padding: 30px;
-    border-radius: 25px; /* Extra rounded as per image */
+    border-radius: 25px;
+    border: 2px solid #000;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    border: none; /* Cleaner look */
 }
 
-.modal-content h3 {
-    font-size: 24px;
-    font-weight: 800;
-    margin-bottom: 20px;
-    text-align: left;
+.inner-form-container {
+    background: #fcfcfc;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #eee;
+    margin: 15px 0;
 }
 
 .modal-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    gap: 12px;
 }
 
-/* Styling for pre-filled info in modals */
-.modal-grid input[readonly] {
-    border: 1.5px solid #eee;
-    cursor: default;
-    font-weight: 600;
-}
-
-/* Ensure labels inside the grid are small and neat */
 .modal-grid label {
+    font-size: 10px;
+    font-weight: 800;
+    color: #999;
+    text-transform: uppercase;
     display: block;
-    margin-bottom: 2px;
-    padding-left: 5px;
+    margin-bottom: 4px;
 }
 
-.modal-content input, 
-.modal-content select {
+.modal-content input, .modal-content select {
     width: 100%;
-    padding: 12px 15px;
-    border-radius: 12px;
+    padding: 10px;
+    border-radius: 10px;
     border: 1.5px solid #ccc;
-    font-size: 15px;
-    color: #333;
     outline: none;
+}
+
+input[readonly] {
+    background: #f1f1f1 !important;
+    cursor: not-allowed;
+}
+
+.highlight-qty {
+    color: #2f5b4a !important;
+    font-weight: bold;
 }
 
 .modal-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 12px;
-    margin-top: 25px;
+    gap: 10px;
+    margin-top: 20px;
 }
 
-/* Rounded Buttons like the Image */
 .modal-btn {
-    padding: 10px 25px;
-    border-radius: 20px;
+    padding: 12px 25px;
+    border-radius: 25px;
     border: 2px solid #000;
     font-weight: 700;
-    font-size: 14px;
     cursor: pointer;
     background: white;
-    transition: 0.2s;
 }
 
 .modal-btn.save {
-    background: #fff; /* Match image style */
-    color: #000;
-}
-
-.modal-btn.save:hover {
     background: #000;
-    color: #fff;
-}
-
-/* --- FOCUS STATES --- */
-input:focus, select:focus {
-    border-color: #2f5b4a;
+    color: white;
 }
