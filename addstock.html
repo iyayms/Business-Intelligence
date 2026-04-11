@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Add Stock</title>
+<link rel="stylesheet" href="addstock.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="sidebar">
+    <div class="logo">STORE</div>
+    <ul>
+      <li>Dashboard</li>
+      <li>Sales Overview</li>
+      <li>Stocks</li>
+      <li>Order History</li>
+      <li>Profits</li>
+
+      <li>Inventory
+        <ul class="submenu">
+          <li onclick="location.href='addproduct.html'">Add Product</li>
+          <li class="active">Add Stock</li>
+          <li>Purchase Product</li>
+          <li>New Purchase Order</li>
+        </ul>
+      </li>
+
+      <li>Profile</li>
+      <li>Settings</li>
+      <li>Logout</li>
+    </ul>
+  </div>
+
+  <div class="main">
+    <div class="header">
+      <h2>Inventory</h2>
+      <input type="text" placeholder="Search here">
+    </div>
+
+    <div class="table-title">
+        <div class="title-left">
+            <span class="back-arrow" onclick="location.href='inventory.html'" style="cursor:pointer;">←</span>
+            <span class="title-text">ADD STOCK</span>
+        </div>
+        <button class="add-btn" onclick="openManualModal()">
+            <span class="icon">+</span>
+            Add Stock
+        </button>
+    </div>
+
+    <div class="modal" id="manualStockModal">
+    <div class="modal-content">
+        <h3>Add Stock</h3>
+        
+        <div class="modal-grid">
+            <select id="manualCategory" onchange="filterProductOptions()">
+                <option value="">Filter Categories</option>
+                <option value="Beverages">Beverages</option>
+                <option value="Snacks">Snacks</option>
+                <option value="Hygiene">Hygiene</option>
+            </select>
+
+            <select id="manualProduct">
+                <option value="">Select Product</option>
+            </select>
+
+            <div style="grid-column: span 2; display: flex; gap: 5px;">
+                <select id="manualSupplier" style="flex: 1;">
+                    <option value="">Choose Supplier</option>
+                    <option value="Direct Purchase">Shop / Direct Purchase</option>
+                    <option value="Global Imports">Global Imports</option>
+                    <option value="Local Wholesaler">Local Wholesaler</option>
+                </select>
+                <button class="add-btn" style="padding: 0 12px; height: 40px; border-radius: 10px;" title="Add New Supplier">+</button>
+            </div>
+
+            <input type="number" id="manualQty" placeholder="Quantity Added">
+
+            <input type="number" id="manualSRP" placeholder="SRP">
+        </div>
+
+        <div class="modal-actions">
+            <button class="modal-btn save" onclick="saveManualEntry()">LOG PURCHASE & UPDATE STOCK</button>
+            <button class="modal-btn" onclick="closeManualModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+      <div class="filter-bar">
+        <div class="input-icon">
+          <span>🔍</span>
+          <input type="text" id="searchInput" placeholder="Search product">
+        </div>
+
+        <select id="categoryFilter">
+          <option value="all">All Categories</option>
+          <option value="Toiletries">Toiletries</option>
+          <option value="Hygiene">Hygiene</option>
+        </select>
+
+        <select id="sortFilter">
+          <option value="low">Low to High</option>
+          <option value="high">High to Low</option>
+        </select>
+      </div>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>SRP</th>
+              <th>Price</th>
+              <th>Qty</th>
+              <th>Category</th>
+              <th>Min Stock</th>
+              <th>Barcode</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="productTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="updateStockModal">
+    <div class="modal-content">
+        <h3>Update Stock Level</h3>
+        
+        <div class="modal-grid">
+            <div style="grid-column: span 2;">
+                <label style="font-size: 11px; color: #777;">Product Name</label>
+                <input type="text" id="updateProductName" readonly style="background: #f9f9f9; color: #555;">
+            </div>
+
+            <div>
+                <label style="font-size: 11px; color: #777;">Category</label>
+                <input type="text" id="updateCategory" readonly style="background: #f9f9f9; color: #555;">
+            </div>
+
+            <div>
+                <label style="font-size: 11px; color: #777;">Current Quantity</label>
+                <input type="text" id="updateCurrentQty" readonly style="background: #f9f9f9; color: #555;">
+            </div>
+
+            <div style="grid-column: span 2;">
+                <select id="updateSupplier">
+                    <option value="">Choose Supplier</option>
+                    <option value="Global Imports">Global Imports</option>
+                    <option value="Local Wholesaler">Local Wholesaler</option>
+                    <option value="Direct Shop">Direct Shop</option>
+                </select>
+            </div>
+
+            <input type="number" id="updateQtyAdded" placeholder="Quantity Added">
+            <input type="number" id="updateSRP" placeholder="SRP">
+        </div>
+
+        <div class="modal-actions">
+            <button class="modal-btn save" onclick="confirmQuickUpdate()">ADD STOCK</button>
+            <button class="modal-btn" onclick="closeUpdateModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script src="addstock.js"></script>
+</body>
+</html>

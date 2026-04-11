@@ -1,0 +1,342 @@
+/* --- GLOBAL STYLES --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: #f1f1f1;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* --- SIDEBAR --- */
+.sidebar {
+    width: 220px;
+    background: #2f5b4a;
+    color: white;
+    padding: 25px;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar li {
+    padding: 10px 12px;
+    margin: 6px 0;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: 0.3s;
+}
+
+.sidebar li:hover {
+    background: #254739;
+}
+
+.sidebar .active {
+    background: #e4b861;
+    color: black;
+    font-weight: bold;
+}
+
+.submenu {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.submenu li {
+    font-size: 14px;
+    padding: 8px 10px;
+}
+
+/* --- MAIN CONTENT --- */
+.main {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h2 {
+    color: #333;
+}
+
+.header input {
+    width: 250px;
+    padding: 10px 15px;
+    border-radius: 25px;
+    border: 1px solid #bbb;
+    outline: none;
+}
+
+/* --- TABLES CONTAINER --- */
+.tables-container {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    border: 2px solid #000;
+}
+
+.table-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.title-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.back-arrow {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.title-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2f5b4a;
+    letter-spacing: 1px;
+}
+
+/* --- ADD BUTTON (RIGHT SIDE) --- */
+.add-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    border: 1.5px solid black;
+    border-radius: 25px;
+    padding: 6px 14px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.add-btn .icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.add-btn:hover {
+    background: #f5f5f5;
+}
+
+/* --- FILTER BAR --- */
+.filter-bar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.filter-bar input,
+.filter-bar select {
+    padding: 8px 14px;
+    border-radius: 25px;
+    border: 1px solid #bbb;
+    font-size: 13px;
+    background: white;
+    outline: none;
+}
+
+.input-icon {
+    position: relative;
+}
+
+.input-icon span {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+}
+
+.input-icon input {
+    padding-left: 30px;
+}
+
+/* --- TABLE STYLES --- */
+.table-scroll {
+    width: 100%;
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    position: sticky;
+    top: 0;
+    background: #d9b062;
+    color: black;
+    font-weight: 600;
+    padding: 12px;
+    border: 1px solid #000;
+    text-align: left;
+    z-index: 10;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #000;
+    font-size: 13px;
+    text-align: left;
+}
+
+/* --- LOW STOCK ANIMATION --- */
+.lowStock {
+    background: #ffefef;
+    color: #c40000;
+    font-weight: bold;
+    animation: blink 1.2s infinite alternate;
+}
+
+@keyframes blink {
+    from { opacity: 1; }
+    to { opacity: 0.5; }
+}
+
+/* --- ACTION BUTTONS (IN TABLE) --- */
+.action-btn {
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.edit {
+    background: #2f5b4a;
+    color: white;
+}
+
+/* --- MODAL STYLES --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- MODAL DESIGN MATCHING YOUR IMAGE --- */
+.modal-content {
+    background: white;
+    width: 450px; /* Slightly wider for the longer button text */
+    padding: 30px;
+    border-radius: 25px; /* Extra rounded as per image */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    border: none; /* Cleaner look */
+}
+
+.modal-content h3 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* Styling for pre-filled info in modals */
+.modal-grid input[readonly] {
+    border: 1.5px solid #eee;
+    cursor: default;
+    font-weight: 600;
+}
+
+/* Ensure labels inside the grid are small and neat */
+.modal-grid label {
+    display: block;
+    margin-bottom: 2px;
+    padding-left: 5px;
+}
+
+.modal-content input, 
+.modal-content select {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 12px;
+    border: 1.5px solid #ccc;
+    font-size: 15px;
+    color: #333;
+    outline: none;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+/* Rounded Buttons like the Image */
+.modal-btn {
+    padding: 10px 25px;
+    border-radius: 20px;
+    border: 2px solid #000;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    background: white;
+    transition: 0.2s;
+}
+
+.modal-btn.save {
+    background: #fff; /* Match image style */
+    color: #000;
+}
+
+.modal-btn.save:hover {
+    background: #000;
+    color: #fff;
+}
+
+/* --- FOCUS STATES --- */
+input:focus, select:focus {
+    border-color: #2f5b4a;
+}
