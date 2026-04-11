@@ -50,7 +50,10 @@
 
       <!-- TITLE -->
       <div class="table-title">
-        <span>ADD PRODUCT</span>
+        <div class="title-left">
+          <span class="back-arrow">←</span>
+          <span class="title-text">ADD PRODUCT</span>
+        </div>
 
         <button class="add-btn" onclick="openModal()">
           <span class="icon">+</span>
@@ -107,23 +110,34 @@
 <div class="modal" id="modal">
   <div class="modal-content">
     <h3>Add Product</h3>
-
     <div class="modal-grid">
       <input id="name" placeholder="Product Name">
-      <input id="category" placeholder="Category">
-
+      <select id="category">
+        <option value="">Select Category</option>
+        <option value="Toiletries">Toiletries</option>
+        <option value="Hygiene">Hygiene</option>
+      </select>
       <input id="srp" placeholder="SRP">
       <input id="price" placeholder="Price">
-
       <input id="qty" placeholder="Quantity">
       <input id="min" placeholder="Min Stock">
-
       <input id="barcode" placeholder="Barcode" style="grid-column: span 2;">
     </div>
 
     <div class="modal-actions">
       <button class="modal-btn" onclick="addProduct()">Save</button>
-      <button class="modal-btn" onclick="closeModal()">Cancel</button>
+      <button class="modal-btn" onclick="closeAllModals()">Cancel</button>
+    </div>
+  </div> </div>
+
+<div class="modal" id="deleteModal">
+  <div class="modal-content">
+    <h3>Confirm Delete</h3>
+    <p style="margin:10px 0;">Are you sure you want to remove this product?</p>
+
+    <div class="modal-actions">
+      <button class="modal-btn" onclick="confirmDelete()">Yes</button>
+      <button class="modal-btn" onclick="closeDeleteModal()">Cancel</button>
     </div>
   </div>
 </div>

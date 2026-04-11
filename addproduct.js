@@ -2,6 +2,7 @@ const table = document.getElementById("productTable");
 const modal = document.getElementById("modal");
 
 let editIndex = null;
+let deleteIndex = null;
 
 let products = [
   {name:"Towel", srp:100, price:150, qty:15, category:"Toiletries", min:5, barcode:"290384"},
@@ -57,7 +58,7 @@ function addProduct(){
   }
 
   renderTable(products);
-  closeModal();
+  closeAllModals(); // Changed from closeModal to closeAllModals
 }
 
 /* EDIT */
@@ -73,16 +74,35 @@ function editProduct(index){
   document.getElementById("min").value = p.min;
   document.getElementById("barcode").value = p.barcode;
 
-  document.querySelector(".modal-content h3").innerText = "Edit Product";
+  document.querySelector("#modal h3").innerText = "Edit Product";  // ✅ target correct modal
 
   editIndex = index;
-  openModal();
+
+  document.getElementById("modal").style.display = "flex";
 }
 
 /* DELETE */
 function removeProduct(index){
-  products.splice(index,1);
-  renderTable(products);
+  deleteIndex = index;
+
+  document.getElementById("deleteModal").style.display = "flex";
+
+  // make sure add/edit modal is closed
+  document.getElementById("modal").style.display = "none";
+}
+
+function confirmDelete(){
+  if(deleteIndex !== null){
+    products.splice(deleteIndex,1);
+    renderTable(products);
+    deleteIndex = null;
+  }
+
+  closeDeleteModal();
+}
+
+function closeDeleteModal(){
+  document.getElementById("deleteModal").style.display = "none";
 }
 
 /* FILTERS */
@@ -117,13 +137,24 @@ sortFilter.addEventListener("change", applyFilters);
 /* MODAL */
 /* RESET TITLE WHEN ADDING */
 function openModal(){
-  modal.style.display = "block";
-  document.querySelector(".modal-content h3").innerText = "Add Product";
-}
-function closeModal(){
-  modal.style.display="none";
+  editIndex = null; // Reset edit index so it doesn't "Edit" when you meant to "Add"
+  document.querySelector("#modal h3").innerText = "Add Product"; 
+  
+  // Clear the inputs
+  document.getElementById("name").value = "";
+  document.getElementById("srp").value = "";
+  document.getElementById("price").value = "";
+  document.getElementById("qty").value = "";
+  document.getElementById("category").value = "";
+  document.getElementById("min").value = "";
+  document.getElementById("barcode").value = "";
 
-  document.querySelectorAll(".modal input").forEach(input => input.value = "");
+  document.getElementById("modal").style.display = "flex";
+}
+
+function closeAllModals(){
+  document.getElementById("modal").style.display = "none";
+  document.getElementById("deleteModal").style.display = "none";
 }
 
 /* INIT */
