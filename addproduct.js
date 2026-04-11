@@ -4,25 +4,24 @@ const modal = document.getElementById("modal");
 let editIndex = null;
 let deleteIndex = null;
 
+// Updated data array with 'size'
 let products = [
-  {name:"Towel", srp:100, price:150, qty:15, category:"Toiletries", min:5, barcode:"290384"},
-  {name:"Sunscreen", srp:50, price:75, qty:3, category:"Hygiene", min:5, barcode:"0348030"},
-  {name:"Soap", srp:20, price:30, qty:2, category:"Hygiene", min:5, barcode:"998877"}
+  {name:"Towel", size: "Large", srp:100, price:150, qty:15, category:"Toiletries", min:5, barcode:"290384"},
+  {name:"Sunscreen", size: "100ml", srp:50, price:75, qty:3, category:"Hygiene", min:5, barcode:"0348030"},
+  {name:"Soap", size: "90g", srp:20, price:30, qty:2, category:"Hygiene", min:5, barcode:"998877"}
 ];
 
 /* RENDER */
 function renderTable(data){
-
   table.innerHTML = "";
 
-  data.forEach((p,index)=>{
-
+  data.forEach((p, index)=>{
     let low = p.qty <= p.min ? "lowStock" : "";
 
     table.innerHTML += `
       <tr>
         <td>${p.name}</td>
-        <td>${p.srp}</td>
+        <td>${p.size || '-'}</td> <td>${p.srp}</td>
         <td>${p.price}</td>
         <td class="${low}">${p.qty}</td>
         <td>${p.category}</td>
@@ -39,15 +38,15 @@ function renderTable(data){
 
 /* ADD OR UPDATE */
 function addProduct(){
-
   let newProduct = {
-  name: document.getElementById("name").value,
-  srp: Number(document.getElementById("srp").value),
-  price: Number(document.getElementById("price").value),
-  qty: Number(document.getElementById("qty").value),
-  category: document.getElementById("category").value,
-  min: Number(document.getElementById("min").value),
-  barcode: document.getElementById("barcode").value
+    name: document.getElementById("name").value,
+    size: document.getElementById("size").value, // Added Size Input
+    srp: Number(document.getElementById("srp").value),
+    price: Number(document.getElementById("price").value),
+    qty: Number(document.getElementById("qty").value),
+    category: document.getElementById("category").value,
+    min: Number(document.getElementById("min").value),
+    barcode: document.getElementById("barcode").value
   };
 
   if(editIndex === null){
@@ -58,15 +57,15 @@ function addProduct(){
   }
 
   renderTable(products);
-  closeAllModals(); // Changed from closeModal to closeAllModals
+  closeAllModals();
 }
 
 /* EDIT */
 function editProduct(index){
-
   let p = products[index];
 
   document.getElementById("name").value = p.name;
+  document.getElementById("size").value = p.size || ""; // Added Size Fill
   document.getElementById("srp").value = p.srp;
   document.getElementById("price").value = p.price;
   document.getElementById("qty").value = p.qty;
@@ -74,20 +73,16 @@ function editProduct(index){
   document.getElementById("min").value = p.min;
   document.getElementById("barcode").value = p.barcode;
 
-  document.querySelector("#modal h3").innerText = "Edit Product";  // ✅ target correct modal
+  document.querySelector("#modal h3").innerText = "Edit Product"; 
 
   editIndex = index;
-
   document.getElementById("modal").style.display = "flex";
 }
 
 /* DELETE */
 function removeProduct(index){
   deleteIndex = index;
-
   document.getElementById("deleteModal").style.display = "flex";
-
-  // make sure add/edit modal is closed
   document.getElementById("modal").style.display = "none";
 }
 
@@ -97,7 +92,6 @@ function confirmDelete(){
     renderTable(products);
     deleteIndex = null;
   }
-
   closeDeleteModal();
 }
 
@@ -107,7 +101,6 @@ function closeDeleteModal(){
 
 /* FILTERS */
 function applyFilters(){
-
   let search = searchInput.value.toLowerCase();
   let categoryVal = categoryFilter.value;
   let sort = sortFilter.value;
@@ -122,7 +115,7 @@ function applyFilters(){
 
   if(sort === "low"){
     filtered.sort((a,b)=>a.price-b.price);
-  } else {
+  } else if(sort === "high") {
     filtered.sort((a,b)=>b.price-a.price);
   }
 
@@ -134,14 +127,13 @@ searchInput.addEventListener("input", applyFilters);
 categoryFilter.addEventListener("change", applyFilters);
 sortFilter.addEventListener("change", applyFilters);
 
-/* MODAL */
-/* RESET TITLE WHEN ADDING */
+/* MODAL RESET */
 function openModal(){
-  editIndex = null; // Reset edit index so it doesn't "Edit" when you meant to "Add"
+  editIndex = null;
   document.querySelector("#modal h3").innerText = "Add Product"; 
   
-  // Clear the inputs
   document.getElementById("name").value = "";
+  document.getElementById("size").value = ""; // Clear Size
   document.getElementById("srp").value = "";
   document.getElementById("price").value = "";
   document.getElementById("qty").value = "";
@@ -157,5 +149,4 @@ function closeAllModals(){
   document.getElementById("deleteModal").style.display = "none";
 }
 
-/* INIT */
 renderTable(products);

@@ -86,6 +86,7 @@
           <thead>
             <tr>
               <th>Product</th>
+              <th>Size</th> 
               <th>SRP</th>
               <th>Price</th>
               <th>Qty</th>
@@ -100,9 +101,7 @@
       </div>
 
     </div>
-    <!-- ✅ CONTAINER END -->
-
-  </div>
+    </div>
 
 </div>
 
@@ -112,15 +111,21 @@
     <h3>Add Product</h3>
     <div class="modal-grid">
       <input id="name" placeholder="Product Name">
+      <input id="size" placeholder="Size (e.g. 1L, Small, 500g)"> 
+      
       <select id="category">
         <option value="">Select Category</option>
-        <option value="Toiletries">Toiletries</option>
+        <option value="Beverages">Beverages</option>
+        <option value="Snacks">Snacks</option>
         <option value="Hygiene">Hygiene</option>
+        <option value="Toiletries">Toiletries</option>
       </select>
+
       <input id="srp" placeholder="SRP">
       <input id="price" placeholder="Price">
       <input id="qty" placeholder="Quantity">
       <input id="min" placeholder="Min Stock">
+
       <input id="barcode" placeholder="Barcode" style="grid-column: span 2;">
     </div>
 
@@ -128,7 +133,8 @@
       <button class="modal-btn" onclick="addProduct()">Save</button>
       <button class="modal-btn" onclick="closeAllModals()">Cancel</button>
     </div>
-  </div> </div>
+  </div> 
+</div>
 
 <div class="modal" id="deleteModal">
   <div class="modal-content">
