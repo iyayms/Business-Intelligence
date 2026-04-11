@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Add Product</title>
+<link rel="stylesheet" href="addproduct.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="logo">STORE</div>
+
+    <ul>
+      <li>Dashboard</li>
+      <li>Sales Overview</li>
+      <li>Stocks</li>
+      <li>Order History</li>
+      <li>Profits</li>
+
+      <li>Inventory
+        <ul class="submenu">
+          <li class="active">Add Product</li>
+          <li>Add Stock</li>
+          <li>Purchase Product</li>
+          <li>New Purchase Order</li>
+        </ul>
+      </li>
+
+      <li>Profile</li>
+      <li>Settings</li>
+      <li>Logout</li>
+    </ul>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <div class="header">
+      <h2>Inventory</h2>
+      <input type="text" placeholder="Search here">
+    </div>
+
+
+    <!-- ✅ CONTAINER START -->
+    <div class="tables-container">
+
+      <!-- TITLE -->
+      <div class="table-title">
+        <span>ADD PRODUCT</span>
+
+        <button class="add-btn" onclick="openModal()">
+          <span class="icon">+</span>
+          Add Product
+        </button>
+      </div>
+
+      <!-- FILTER -->
+      <div class="filter-bar">
+        <div class="input-icon">
+          <span>🔍</span>
+          <input type="text" id="searchInput" placeholder="Search product">
+        </div>
+
+        <select id="categoryFilter">
+          <option value="all">All Categories</option>
+          <option value="Toiletries">Toiletries</option>
+          <option value="Hygiene">Hygiene</option>
+        </select>
+
+        <select id="sortFilter">
+          <option value="low">Low to High</option>
+          <option value="high">High to Low</option>
+        </select>
+      </div>
+
+      <!-- ✅ TABLE NOW INSIDE -->
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>SRP</th>
+              <th>Price</th>
+              <th>Qty</th>
+              <th>Category</th>
+              <th>Min Stock</th>
+              <th>Barcode</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="productTable"></tbody>
+        </table>
+      </div>
+
+    </div>
+    <!-- ✅ CONTAINER END -->
+
+  </div>
+
+</div>
+
+<!-- MODAL (moved OUTSIDE container for proper overlay) -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3>Add Product</h3>
+
+    <div class="modal-grid">
+      <input id="name" placeholder="Product Name">
+      <input id="category" placeholder="Category">
+
+      <input id="srp" placeholder="SRP">
+      <input id="price" placeholder="Price">
+
+      <input id="qty" placeholder="Quantity">
+      <input id="min" placeholder="Min Stock">
+
+      <input id="barcode" placeholder="Barcode" style="grid-column: span 2;">
+    </div>
+
+    <div class="modal-actions">
+      <button class="modal-btn" onclick="addProduct()">Save</button>
+      <button class="modal-btn" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="addproduct.js"></script>
+</body>
+</html>
