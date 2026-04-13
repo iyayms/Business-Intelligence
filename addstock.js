@@ -1,4 +1,4 @@
-/* INITIAL DATA WITH SIZE */
+/* INITIAL DATA */
 let products = [
     {name: "Towel", size: "Large", srp: 100, price: 150, qty: 15, category: "Toiletries", min: 5, barcode: "290384"},
     {name: "Sunscreen", size: "100ml", srp: 50, price: 75, qty: 3, category: "Hygiene", min: 5, barcode: "0348030"},
@@ -7,6 +7,7 @@ let products = [
     {name: "Potato Chips", size: "Family", srp: 30, price: 42, qty: 8, category: "Snacks", min: 15, barcode: "716073"}
 ];
 
+// DOM Elements
 const tableBody = document.getElementById("productTable");
 const manualModal = document.getElementById("manualStockModal");
 const updateModal = document.getElementById("updateStockModal");
@@ -18,6 +19,7 @@ let selectedIndex = null;
 
 /* TABLE RENDERING */
 function renderTable(data) {
+    if (!tableBody) return; // Guard clause to prevent errors if element is missing
     tableBody.innerHTML = "";
     data.forEach((p) => {
         const actualIndex = products.findIndex(item => item.name === p.name);
@@ -26,7 +28,8 @@ function renderTable(data) {
         const row = `
             <tr>
                 <td>${p.name}</td>
-                <td>${p.size}</td> <td>${p.srp}</td>
+                <td>${p.size}</td> 
+                <td>${p.srp}</td>
                 <td>${p.price}</td>
                 <td class="${lowClass}">${p.qty}</td>
                 <td>${p.category}</td>
@@ -41,14 +44,23 @@ function renderTable(data) {
     });
 }
 
-/* MANUAL ADD MODAL LOGIC */
-function openManualModal() {
-    manualModal.style.display = "flex";
+/* SIDEBAR DROPDOWN TOGGLE */
+// We use a check to make sure the ID exists before adding the listener
+const invToggle = document.getElementById("inventoryToggle");
+if (invToggle) {
+    invToggle.addEventListener("click", function() {
+        const submenu = document.getElementById("inventorySubmenu");
+        const icon = this.querySelector(".dropdown-icon");
+        
+        // This relies on the CSS .open and .rotate classes defined above
+        if (submenu) submenu.classList.toggle("open");
+        if (icon) icon.classList.toggle("rotate");
+    });
 }
 
-function closeManualModal() {
-    manualModal.style.display = "none";
-}
+/* MODAL LOGIC */
+function openManualModal() { manualModal.style.display = "flex"; }
+function closeManualModal() { manualModal.style.display = "none"; }
 
 function filterProductOptions() {
     const category = document.getElementById("manualCategory").value;
@@ -58,7 +70,7 @@ function filterProductOptions() {
     products.filter(p => p.category === category).forEach(p => {
         const opt = document.createElement("option");
         opt.value = p.name;
-        opt.textContent = `${p.name} (${p.size})`; // Show size in dropdown
+        opt.textContent = `${p.name} (${p.size})`;
         productDrop.appendChild(opt);
     });
 }
@@ -72,7 +84,7 @@ function saveManualEntry() {
     if (name && !isNaN(qty) && qty > 0) {
         const idx = products.findIndex(p => p.name === name);
         products[idx].qty += qty;
-        if (size) products[idx].size = size; // Update size if provided
+        if (size) products[idx].size = size;
         if (srp) products[idx].srp = Number(srp);
         
         renderTable(products);
@@ -82,37 +94,29 @@ function saveManualEntry() {
     }
 }
 
-/* QUICK UPDATE MODAL LOGIC */
 function openStockModal(index) {
     selectedIndex = index;
     const p = products[index];
-    
     document.getElementById("updateProductName").value = p.name;
     document.getElementById("updateCategory").value = p.category;
     document.getElementById("updateCurrentQty").value = p.qty;
-    document.getElementById("updateSize").value = p.size; // Pre-fill size
-    
+    document.getElementById("updateSize").value = p.size;
     document.getElementById("updateQtyAdded").value = "";
     document.getElementById("updateSRP").value = p.srp;
     document.getElementById("updateSupplier").value = "";
-
     updateModal.style.display = "flex";
 }
 
-function closeUpdateModal() {
-    updateModal.style.display = "none";
-}
+function closeUpdateModal() { updateModal.style.display = "none"; }
 
 function confirmQuickUpdate() {
     const qty = parseInt(document.getElementById("updateQtyAdded").value);
-    const size = document.getElementById("updateSize").value;
     const supplier = document.getElementById("updateSupplier").value;
     
     if (!isNaN(qty) && qty > 0 && supplier) {
         products[selectedIndex].qty += qty;
-        if (size) products[selectedIndex].size = size; // Update size
+        products[selectedIndex].size = document.getElementById("updateSize").value;
         products[selectedIndex].srp = Number(document.getElementById("updateSRP").value);
-        
         renderTable(products);
         closeUpdateModal();
     } else {
@@ -120,59 +124,33 @@ function confirmQuickUpdate() {
     }
 }
 
-/* SEARCH */
-searchInput.addEventListener("input", function(e) {
-    const term = e.target.value.toLowerCase();
-    const filtered = products.filter(p => p.name.toLowerCase().includes(term));
-    renderTable(filtered);
-});
-
+/* FILTERS */
 function applyAllFilters() {
     let searchTerm = searchInput.value.toLowerCase();
     let selectedCategory = categoryFilter.value;
     let sortValue = sortFilter.value;
 
-    // 1. Start with the full list
     let filteredData = products.filter(p => {
-        // 2. Filter by Search Term (Name or Barcode)
-        const matchesSearch = p.name.toLowerCase().includes(searchTerm) || 
-                             p.barcode.includes(searchTerm);
-        
-        // 3. Filter by Category
-        const matchesCategory = (selectedCategory === "all") || 
-                                (p.category === selectedCategory);
-
+        const matchesSearch = p.name.toLowerCase().includes(searchTerm) || p.barcode.includes(searchTerm);
+        const matchesCategory = (selectedCategory === "all") || (p.category === selectedCategory);
         return matchesSearch && matchesCategory;
     });
 
-    // 4. Apply Sorting
-    if (sortValue === "low") {
-        // Sort by Price: Low to High
-        filteredData.sort((a, b) => a.price - b.price);
-    } else if (sortValue === "high") {
-        // Sort by Price: High to Low
-        filteredData.sort((a, b) => b.price - a.price);
-    }
+    if (sortValue === "low") filteredData.sort((a, b) => a.price - b.price);
+    else if (sortValue === "high") filteredData.sort((a, b) => b.price - a.price);
 
-    // 5. Render the result
     renderTable(filteredData);
 }
 
-/* --- EVENT LISTENERS --- */
-
-// Listen for typing in search
-searchInput.addEventListener("input", applyAllFilters);
-
-// Listen for Category selection changes
-categoryFilter.addEventListener("change", applyAllFilters);
-
-// Listen for Sort selection changes
-sortFilter.addEventListener("change", applyAllFilters);
-
-/* INIT */
-renderTable(products);
+// Listeners
+if(searchInput) searchInput.addEventListener("input", applyAllFilters);
+if(categoryFilter) categoryFilter.addEventListener("change", applyAllFilters);
+if(sortFilter) sortFilter.addEventListener("change", applyAllFilters);
 
 window.onclick = function(event) {
     if (event.target == manualModal) closeManualModal();
     if (event.target == updateModal) closeUpdateModal();
 };
+
+/* INITIALIZE TABLE */
+renderTable(products);

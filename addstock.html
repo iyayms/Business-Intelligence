@@ -3,54 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventory Management - Add Stock</title>
+    <title>Add Stock - Inventory</title>
     <link rel="stylesheet" href="addstock.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
 
 <div class="container">
-    <div class="sidebar">
-        <div class="logo">STORE</div>
+    <nav class="sidebar">
+        <div class="logo"><i class="ph ph-storefront"></i> STORE</div>
         <ul>
-            <li>Dashboard</li>
-            <li>Sales Overview</li>
-            <li>Stocks</li>
-            <li>Order History</li>
-            <li>Profits</li>
-            <li>Inventory
-                <ul class="submenu">
-                    <li onclick="location.href='addproduct.html'">Add Product</li>
-                    <li class="active">Add Stock</li>
-                    <li>Purchase Product</li>
-                    <li>New Purchase Order</li>
-                </ul>
-            </li>
-            <li>Profile</li>
-            <li>Settings</li>
-            <li>Logout</li>
+            <li><i class="ph ph-squares-four"></i> Dashboard</li>
+            <li><i class="ph ph-chart-line-up"></i> Sales Overview</li>
+            <li><i class="ph ph-package"></i> Stocks</li>
+            <li><i class="ph ph-clock-counter-clockwise"></i> Order History</li>
+            <li><i class="ph ph-currency-circle-dollar"></i> Profits</li>
+            <li class="menu-item has-submenu" id="inventoryToggle">
+                <div class="menu-content">
+                    <i class="ph ph-clipboard-text"></i> 
+                    <span>Inventory</span>
+                </div>
+                <i class="ph ph-caret-down dropdown-icon rotate"></i> </li>
+
+            <ul class="submenu open" id="inventorySubmenu"> <li onclick="location.href='addproduct.html'">Add Product</li>
+                <li class="active-sub">Add Stock</li>
+                <li>Purchase Product</li>
+                <li>New Purchase Order</li>
+            </ul>
+            <li><i class="ph ph-user"></i> Profile</li>
+            <li><i class="ph ph-gear"></i> Settings</li>
+            <li><i class="ph ph-sign-out"></i> Logout</li>
         </ul>
-    </div>
+    </nav>
 
     <div class="main">
-        <div class="header">
-            <h2>Inventory</h2>
-            <input type="text" id="globalTopSearch" placeholder="Search here">
-        </div>
+        <header class="header">
+            <div>
+                <h2>Inventory</h2>
+                <p style="font-size: 12px; color: #666;">Manage products, stocks, and suppliers</p>
+            </div>
+            <div class="input-icon">
+                <span><i class="ph ph-magnifying-glass"></i></span>
+                <input type="text" id="globalTopSearch" placeholder="Search here">
+            </div>
+        </header>
 
         <div class="tables-container">
             <div class="table-title">
-                <div class="title-left">
-                    <span class="back-arrow" onclick="location.href='inventory.html'" style="cursor:pointer;">←</span>
-                    <span class="title-text">ADD STOCK</span>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="back-btn" onclick="location.href='addproduct.html'"><i class="ph ph-arrow-left"></i></button>
+                    <h1 class="title-text">ADD STOCK</h1>
                 </div>
                 <button class="add-btn" id="manualAddTrigger" onclick="openManualModal()">
-                    <span class="icon">+</span> Add Stock
+                    <span class="icon">+</span> ADD STOCK
                 </button>
             </div>
 
             <div class="filter-bar">
                 <div class="input-icon">
-                    <span>🔍</span>
+                    <span><i class="ph ph-magnifying-glass"></i></span>
                     <input type="text" id="searchInput" placeholder="Search product">
                 </div>
                 <select id="categoryFilter">
@@ -68,11 +79,12 @@
             </div>
 
             <div class="table-scroll">
-                <table id="mainStockTable">
+                <table>
                     <thead>
                         <tr>
                             <th>Product</th>
-                            <th>Size</th> <th>SRP</th>
+                            <th>Size</th> 
+                            <th>SRP</th>
                             <th>Price</th>
                             <th>Qty</th>
                             <th>Category</th>
@@ -81,8 +93,7 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody id="productTable">
-                        </tbody>
+                    <tbody id="productTable"></tbody>
                 </table>
             </div>
         </div>
@@ -91,11 +102,11 @@
 
 <div class="modal" id="manualStockModal">
     <div class="modal-content">
-        <h3>Add Stock</h3>
+        <div class="modal-header"><h3>ADD STOCK</h3></div>
         <div class="inner-form-container">
             <div class="modal-grid">
                 <div style="grid-column: span 2;">
-                    <label>Filter Categories</label>
+                    <label>FILTER CATEGORIES</label>
                     <select id="manualCategory" onchange="filterProductOptions()">
                         <option value="">Select Category</option>
                         <option value="Beverages">Beverages</option>
@@ -105,54 +116,60 @@
                     </select>
                 </div>
                 <div style="grid-column: span 2;">
-                    <label>Select Product</label>
+                    <label>SELECT PRODUCT</label>
                     <select id="manualProduct">
                         <option value="">Choose Category First</option>
                     </select>
                 </div>
-                <div style="grid-column: span 2; display: flex; gap: 8px; align-items: flex-end;">
-                    <div style="flex: 1;">
-                        <label>Supplier</label>
-                        <select id="manualSupplier">
-                            <option value="">Choose Supplier</option>
-                            <option value="Global Imports">Global Imports</option>
-                            <option value="Local Wholesaler">Local Wholesaler</option>
-                            <option value="Direct Purchase">Shop / Direct Purchase</option>
-                        </select>
-                    </div>
-                    <button class="add-btn" style="padding: 0 10px; height: 40px; margin-top: 18px;" type="button">+</button>
+                <div style="grid-column: span 2;">
+                    <label>SUPPLIER</label>
+                    <select id="manualSupplier">
+                        <option value="">Choose Supplier</option>
+                        <option value="Global Imports">Global Imports</option>
+                        <option value="Local Wholesaler">Local Wholesaler</option>
+                        <option value="Direct Purchase">Direct Purchase</option>
+                    </select>
                 </div>
-                <input type="text" id="manualSize" placeholder="Size (e.g. 500ml, L)">
-                <input type="number" id="manualQty" placeholder="Quantity Added">
-                <input type="number" id="manualSRP" placeholder="SRP" style="grid-column: span 2;">
+                <div>
+                    <label>SIZE</label>
+                    <input type="text" id="manualSize" placeholder="e.g. 500ml">
+                </div>
+                <div>
+                    <label>QTY ADDED</label>
+                    <input type="number" id="manualQty">
+                </div>
+                <div style="grid-column: span 2;">
+                    <label>SRP</label>
+                    <input type="number" id="manualSRP">
+                </div>
             </div>
         </div>
-        <div class="modal-actions">
-            <button class="modal-btn save" onclick="saveManualEntry()">LOG PURCHASE & UPDATE STOCK</button>
-            <button class="modal-btn" onclick="closeManualModal()">Cancel</button>
+        <div class="modal-footer">
+            <button class="modal-btn" onclick="closeManualModal()">CANCEL</button>
+            <button class="modal-btn save" onclick="saveManualEntry()">UPDATE STOCK</button>
         </div>
     </div>
 </div>
 
 <div class="modal" id="updateStockModal">
     <div class="modal-content">
-        <h3>Update Stock Level</h3>
+        <div class="modal-header"><h3>UPDATE STOCK LEVEL</h3></div>
         <div class="inner-form-container">
             <div class="modal-grid">
                 <div style="grid-column: span 2;">
-                    <label>Product Name</label>
+                    <label>PRODUCT NAME</label>
                     <input type="text" id="updateProductName" readonly>
                 </div>
                 <div>
-                    <label>Category</label>
+                    <label>CATEGORY</label>
                     <input type="text" id="updateCategory" readonly>
                 </div>
                 <div>
-                    <label>Current Quantity</label>
+                    <label>CURRENT QTY</label>
                     <input type="text" id="updateCurrentQty" readonly class="highlight-qty">
                 </div>
                 <div style="grid-column: span 2;">
-                    <label>Supplier</label>
+                    <label>SUPPLIER</label>
                     <select id="updateSupplier">
                         <option value="">Choose Supplier</option>
                         <option value="Global Imports">Global Imports</option>
@@ -161,22 +178,22 @@
                     </select>
                 </div>
                 <div>
-                    <label>Size</label>
-                    <input type="text" id="updateSize" placeholder="Small, Medium, Large">
+                    <label>SIZE</label>
+                    <input type="text" id="updateSize">
                 </div>
                 <div>
-                    <label>Quantity Added</label>
-                    <input type="number" id="updateQtyAdded" placeholder="0">
+                    <label>QTY ADDED</label>
+                    <input type="number" id="updateQtyAdded">
                 </div>
                 <div style="grid-column: span 2;">
                     <label>SRP</label>
-                    <input type="number" id="updateSRP" placeholder="0.00">
+                    <input type="number" id="updateSRP">
                 </div>
             </div>
         </div>
-        <div class="modal-actions">
+        <div class="modal-footer">
+            <button class="modal-btn" onclick="closeUpdateModal()">CANCEL</button>
             <button class="modal-btn save" onclick="confirmQuickUpdate()">ADD STOCK</button>
-            <button class="modal-btn" onclick="closeUpdateModal()">Cancel</button>
         </div>
     </div>
 </div>
