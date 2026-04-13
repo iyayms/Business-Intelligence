@@ -112,8 +112,7 @@
     <div class="modal-content product-modal">
         <div class="modal-header">
             <h3 id="modalTitle">ADD PRODUCT</h3>
-            
-            <button class="apply-btn" id="applyProduct">APPLY</button>
+            <button class="close-btn" onclick="closeProductModal()">&times;</button>
         </div>
         
         <div class="modal-body">
@@ -130,6 +129,21 @@
             <div class="readonly-fields">
                 <p><strong>PRICE:</strong> <span id="modalPrice">--</span></p>
                 <p><strong>CATEGORY:</strong> <span id="modalCategory">--</span></p>
+            </div>
+
+            <div class="input-group">
+                <label>SIZE:</label>
+                <select id="modalSize">
+                    <option value="" disabled selected>Select Size</option>
+                    <option value="Small">Small</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Large">Large</option>
+                    <option value="1 roll">1 roll</option>
+                    <option value="30g">30g</option>
+                </select>
+            </div>
+
+            <div class="readonly-fields">
                 <p><strong>BAR CODE:</strong> <span id="modalBarCode">--</span></p>
             </div>
 
@@ -143,7 +157,8 @@
             </div>
         </div>
 
-        <div class="modal-footer">
+        <div class="modal-footer" style="display: flex; justify-content: flex-end; gap: 10px;">
+            <button class="modal-btn" onclick="closeProductModal()">CANCEL</button>
             <button class="apply-btn" id="applyProduct">APPLY</button>
         </div>
     </div>
