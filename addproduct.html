@@ -1,151 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Add Product</title>
-<link rel="stylesheet" href="addproduct.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product - Inventory</title>
+    <link rel="stylesheet" href="addproduct.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
-
 <body>
 
 <div class="container">
+    <nav class="sidebar">
+        <div class="logo">
+            <i class="ph ph-storefront"></i> STORE
+        </div>
+        <ul>
+            <li><i class="ph ph-squares-four"></i> Dashboard</li>
+            <li><i class="ph ph-chart-line-up"></i> Sales Overview</li>
+            <li><i class="ph ph-package"></i> Stocks</li>
+            <li><i class="ph ph-clock-counter-clockwise"></i> Order History</li>
+            <li><i class="ph ph-currency-circle-dollar"></i> Profits</li>
+            
+            <li class="menu-item has-submenu">
+                <div class="menu-content">
+                    <i class="ph ph-clipboard-text"></i> 
+                    <span>Inventory</span>
+                </div>
+                <i class="ph ph-caret-down dropdown-icon rotate"></i>
+            </li>
+            
+            <ul class="submenu open">
+                <li class="active-sub">Add Product</li>
+                <li>Add Stock</li>
+                <li>Purchase Product</li>
+                <li>New Purchase Order</li>
+            </ul>
 
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <div class="logo">STORE</div>
-
-    <ul>
-      <li>Dashboard</li>
-      <li>Sales Overview</li>
-      <li>Stocks</li>
-      <li>Order History</li>
-      <li>Profits</li>
-
-      <li>Inventory
-        <ul class="submenu">
-          <li class="active">Add Product</li>
-          <li>Add Stock</li>
-          <li>Purchase Product</li>
-          <li>New Purchase Order</li>
+            <li><i class="ph ph-user"></i> Profile</li>
+            <li><i class="ph ph-gear"></i> Settings</li>
+            <li><i class="ph ph-sign-out"></i> Logout</li>
         </ul>
-      </li>
+    </nav>
 
-      <li>Profile</li>
-      <li>Settings</li>
-      <li>Logout</li>
-    </ul>
-  </div>
+    <div class="main">
+        <header class="header">
+            <div>
+                <h2>Inventory</h2>
+                <p style="font-size: 12px; color: #666;">Manage products, stocks, and suppliers</p>
+            </div>
+            <div class="input-icon">
+                <span><i class="ph ph-magnifying-glass"></i></span>
+                <input type="text" placeholder="Search here">
+            </div>
+        </header>
 
-  <!-- MAIN -->
-  <div class="main">
+        <div class="tables-container">
+            <div class="table-title">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="back-btn"><i class="ph ph-arrow-left"></i></button>
+                    <h1 class="title-text">ADD PRODUCT</h1>
+                </div>
+                <button class="add-btn" onclick="openModal()">
+                    <span class="icon">+</span> ADD PRODUCT
+                </button>
+            </div>
 
-    <div class="header">
-      <h2>Inventory</h2>
-      <input type="text" placeholder="Search here">
-    </div>
+            <div class="purchase-info">
+                <p><strong>Database:</strong> <span id="current-time">Product List</span></p>
+                <div class="filter-bar">
+                    <div class="input-icon">
+                        <span><i class="ph ph-magnifying-glass"></i></span>
+                        <input type="text" id="searchInput" placeholder="Search product">
+                    </div>
+                    <select id="categoryFilter">
+                        <option value="all">All Categories</option>
+                        <option value="Toiletries">Toiletries</option>
+                        <option value="Hygiene">Hygiene</option>
+                    </select>
+                    <select id="sortFilter">
+                        <option value="low">Price: Low to High</option>
+                        <option value="high">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
 
-
-    <!-- ✅ CONTAINER START -->
-    <div class="tables-container">
-
-      <!-- TITLE -->
-      <div class="table-title">
-        <div class="title-left">
-          <span class="back-arrow">←</span>
-          <span class="title-text">ADD PRODUCT</span>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Size</th> 
+                            <th>SRP</th>
+                            <th>Price</th>
+                            <th>Qty</th>
+                            <th>Category</th>
+                            <th>Min Stock</th>
+                            <th>Barcode</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTable"></tbody>
+                </table>
+            </div>
         </div>
-
-        <button class="add-btn" onclick="openModal()">
-          <span class="icon">+</span>
-          Add Product
-        </button>
-      </div>
-
-      <!-- FILTER -->
-      <div class="filter-bar">
-        <div class="input-icon">
-          <span>🔍</span>
-          <input type="text" id="searchInput" placeholder="Search product">
-        </div>
-
-        <select id="categoryFilter">
-          <option value="all">All Categories</option>
-          <option value="Toiletries">Toiletries</option>
-          <option value="Hygiene">Hygiene</option>
-        </select>
-
-        <select id="sortFilter">
-          <option value="low">Low to High</option>
-          <option value="high">High to Low</option>
-        </select>
-      </div>
-
-      <!-- ✅ TABLE NOW INSIDE -->
-      <div class="table-scroll">
-        <table>
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Size</th> 
-              <th>SRP</th>
-              <th>Price</th>
-              <th>Qty</th>
-              <th>Category</th>
-              <th>Min Stock</th>
-              <th>Barcode</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="productTable"></tbody>
-        </table>
-      </div>
-
     </div>
-    </div>
-
 </div>
 
-<!-- MODAL (moved OUTSIDE container for proper overlay) -->
 <div class="modal" id="modal">
-  <div class="modal-content">
-    <h3>Add Product</h3>
-    <div class="modal-grid">
-      <input id="name" placeholder="Product Name">
-      <input id="size" placeholder="Size (e.g. 1L, Small, 500g)"> 
-      
-      <select id="category">
-        <option value="">Select Category</option>
-        <option value="Beverages">Beverages</option>
-        <option value="Snacks">Snacks</option>
-        <option value="Hygiene">Hygiene</option>
-        <option value="Toiletries">Toiletries</option>
-      </select>
+    <div class="modal-content product-modal">
+        <div class="modal-header">
+            <h3 id="modalTitle">ADD PRODUCT</h3>
+        </div>
+        
+        <div class="modal-body">
+            <div class="input-group">
+                <label>PRODUCT NAME:</label>
+                <input id="name" type="text" placeholder="Enter name">
+            </div>
+            <div class="input-group">
+                <label>SIZE:</label>
+                <input id="size" type="text" placeholder="e.g. 1L, Small">
+            </div>
+            <div class="input-group">
+                <label>CATEGORY:</label>
+                <select id="category" style="flex:1; padding: 8px; border: 1.5px solid black; border-radius: 5px;">
+                    <option value="">Select Category</option>
+                    <option value="Beverages">Beverages</option>
+                    <option value="Snacks">Snacks</option>
+                    <option value="Hygiene">Hygiene</option>
+                    <option value="Toiletries">Toiletries</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>SRP:</label>
+                <input id="srp" type="number">
+                <label style="width: 60px; margin-left: 10px;">PRICE:</label>
+                <input id="price" type="number">
+            </div>
+            <div class="input-group">
+                <label>QUANTITY:</label>
+                <input id="qty" type="number">
+                <label style="width: 80px; margin-left: 10px;">MIN STOCK:</label>
+                <input id="min" type="number">
+            </div>
+            <div class="input-group">
+                <label>BARCODE:</label>
+                <input id="barcode" type="text">
+            </div>
+        </div>
 
-      <input id="srp" placeholder="SRP">
-      <input id="price" placeholder="Price">
-      <input id="qty" placeholder="Quantity">
-      <input id="min" placeholder="Min Stock">
-
-      <input id="barcode" placeholder="Barcode" style="grid-column: span 2;">
+        <div class="modal-footer" style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px;">
+            <button class="modal-btn" onclick="closeAllModals()">CANCEL</button>
+            <button class="apply-btn" onclick="addProduct()">SAVE PRODUCT</button>
+        </div>
     </div>
-
-    <div class="modal-actions">
-      <button class="modal-btn" onclick="addProduct()">Save</button>
-      <button class="modal-btn" onclick="closeAllModals()">Cancel</button>
-    </div>
-  </div> 
 </div>
 
-<div class="modal" id="deleteModal">
-  <div class="modal-content">
-    <h3>Confirm Delete</h3>
-    <p style="margin:10px 0;">Are you sure you want to remove this product?</p>
-
-    <div class="modal-actions">
-      <button class="modal-btn" onclick="confirmDelete()">Yes</button>
-      <button class="modal-btn" onclick="closeDeleteModal()">Cancel</button>
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3>CONFIRM DELETE</h3></div>
+        <div class="inner-form-container">
+            <p>Are you sure you want to remove this product?</p>
+            <label>This action cannot be undone.</label>
+        </div>
+        <div class="modal-actions">
+            <button class="modal-btn" onclick="closeDeleteModal()">NO</button>
+            <button class="modal-btn save" onclick="confirmDelete()">YES, REMOVE</button>
+        </div>
     </div>
-  </div>
 </div>
 
 <script src="addproduct.js"></script>
