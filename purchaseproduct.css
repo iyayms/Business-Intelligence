@@ -1,0 +1,374 @@
+/* Merged Base Styles from your addstock.css */
+* {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body { background: #f1f1f1; }
+
+.container { display: flex; height: 100vh; }
+
+/* SIDEBAR */
+.sidebar { width: 240px; background: #2f5b4a; color: white; padding: 20px; overflow-y: auto; }
+.logo { font-size: 24px; font-weight: bold; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; color: #e4b861; }
+.sidebar ul { list-style: none; }
+.sidebar li { padding: 10px 15px; margin: 4px 0; cursor: pointer; border-radius: 25px; transition: 0.3s; display: flex; align-items: center; gap: 10px; font-size: 14px; }
+.sidebar li:hover { background: #254739; }
+.sidebar .active { background: #e4b861; color: black; font-weight: bold; }
+
+/* Parent Menu Item Layout */
+.has-submenu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Submenu Styling */
+.submenu {
+    list-style: none;
+    padding-left: 45px; /* Indents the subtabs */
+    max-height: 0;      /* Hidden by default */
+    overflow: hidden;
+    transition: max-height 0.3s ease-out; /* Smooth slide effect */
+}
+
+/* When the menu is "open" */
+.submenu.open {
+    max-height: 200px; /* Adjust based on number of items */
+    margin-bottom: 10px;
+}
+
+.submenu li {
+    font-size: 13px;
+    padding: 8px 12px !important;
+    color: rgba(255, 255, 255, 0.7);
+    border-radius: 15px !important;
+}
+
+.submenu li:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Specific style for active subtab (Purchase Product) */
+.active-sub {
+    background: #e4b861 !important;
+    color: black !important;
+    font-weight: bold;
+}
+
+/* Rotate caret when open */
+.dropdown-icon {
+    transition: transform 0.3s;
+    font-size: 12px;
+}
+
+.rotate {
+    transform: rotate(180deg);
+}
+
+/* MAIN AREA */
+.main { flex: 1; padding: 30px; overflow-y: auto; }
+.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+
+/* REUSABLE INPUT ICON */
+.input-icon { position: relative; }
+.input-icon span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #888; }
+.input-icon input { padding: 10px 15px 10px 35px; border-radius: 25px; border: 1px solid #bbb; outline: none; width: 280px; }
+
+/* MAIN TABLE CONTAINER */
+.tables-container {
+    background: white; padding: 30px; border-radius: 20px;
+    border: 2px solid black; display: flex; flex-direction: column; min-height: 70vh;
+}
+
+.table-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+.title-text { font-size: 22px; font-weight: 900; color: #2f5b4a; }
+.back-btn { background: none; border: none; font-size: 24px; cursor: pointer; }
+
+/* PURCHASE PAGE SPECIFICS */
+.purchase-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; width: 95%; margin-inline: auto; }
+.filter-bar { display: flex; gap: 10px; }
+.filter-bar select { border-radius: 25px; padding: 0 15px; border: 1px solid #bbb; }
+
+/* TABLE STYLING */
+table { width: 95%; margin: 0 auto; border-collapse: collapse; }
+thead th { background: #d9b062; padding: 12px; border: 1px solid #000; text-align: left; }
+td { padding: 12px; border: 1px solid #000; background: white; }
+
+/* ACTION BUTTONS IN TABLE */
+.action-cell { display: flex; flex-direction: column; gap: 5px; align-items: center; }
+.row-btn {
+    width: 120px; padding: 5px; border-radius: 20px; border: 2px solid black;
+    font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; background: white; font-size: 11px;
+}
+
+/* FOOTER */
+.footer-actions {
+    width: 95%; margin: 30px auto 0 auto; display: flex; 
+    justify-content: space-between; align-items: center;
+}
+.total-section { font-size: 18px; }
+.checkout-btn {
+    padding: 12px 40px; border-radius: 25px; border: 2px solid black;
+    background: white; font-weight: 900; cursor: pointer; transition: 0.2s;
+}
+.checkout-btn:hover { background: #000; color: white; }
+
+/* ADD PRODUCT BUTTON */
+.add-btn {
+    display: flex; align-items: center; gap: 8px; background: white;
+    border: 2px solid black; border-radius: 25px; padding: 8px 18px;
+    cursor: pointer; font-weight: 800;
+}
+.add-btn .icon {
+    width: 20px; height: 20px; border-radius: 50%; background: black;
+    color: white; display: flex; align-items: center; justify-content: center;
+}
+
+/* Modal Styles */
+/* This is the semi-transparent background */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.5); /* The dark tint */
+    align-items: center; 
+    justify-content: center;
+}
+
+/* This is the solid white container for the message */
+.modal-content {
+    background: white; /* This prevents the transparency */
+    width: 440px; 
+    padding: 30px; 
+    border-radius: 25px; 
+    border: 2px solid #000; /* Same 2px border as your wireframe */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.inner-form-container p {
+    margin-bottom: 12px;   /* Adds space below the question */
+    font-size: 16px;
+    font-weight: 600;      /* Makes the main question stand out */
+    line-height: 1.4;      /* Improves readability */
+}
+
+.inner-form-container label {
+    display: block;        /* Ensures the label stays on its own line */
+    margin-bottom: 10px;   /* Adds space before the buttons */
+    color: #666;           /* Dims the secondary text for a formal look */
+    font-size: 13px;
+    font-style: italic;    /* Distinguishes it from the main question */
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-btn {
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: 2px solid #000;
+    font-weight: 700;
+    cursor: pointer;
+    background: white;
+}
+
+.modal-btn.save {
+    background: #000;
+    color: white;
+}
+
+.product-modal {
+    background: white;
+    width: 600px;
+    padding: 30px;
+    border-radius: 25px;
+    border: 3px solid black;
+    position: relative;
+}
+
+.modal-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;
+}
+
+.close-btn {
+    background: white; border: 2px solid black; border-radius: 50%;
+    width: 30px; height: 30px; cursor: pointer; font-weight: bold;
+}
+
+.input-group { margin: 15px 0; display: flex; align-items: center; gap: 15px; }
+.input-group label { font-weight: 900; width: 140px; font-size: 14px; }
+.input-group input { 
+    flex: 1; padding: 8px 12px; border: 1.5px solid black; border-radius: 5px; 
+}
+
+.readonly-fields p { margin: 10px 0; font-size: 14px; }
+.readonly-fields strong { width: 140px; display: inline-block; }
+
+.total-display { margin-left: auto; font-size: 16px; }
+
+.apply-btn {
+    float: right; margin-top: 10px;
+    padding: 10px 40px; border-radius: 20px; border: 2px solid black;
+    background: white; font-weight: 900; cursor: pointer;
+}
+.apply-btn:hover { background: #000; color: white; }
+
+/* Ensure new elements use your specified font from addstock.css */
+#checkOutModal, #proceedModal,
+#checkOutModal p, #proceedModal p,
+#checkOutModal h1, #checkOutModal input {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Modal Title from your provided style */
+.modal-title-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2f5b4a;
+    letter-spacing: 1px;
+}
+
+/* Label text from your provided style */
+.modal-label {
+    font-size: 10px;
+    font-weight: 800;
+    color: #999;
+    text-transform: uppercase;
+}
+
+/* Close Icon alignment like image_3.png */
+.modal-close-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border: 2px solid #000;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    background: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* STEP 1: CHECKOUT SPECIFICS */
+.checkout-size {
+    width: 400px;
+    position: relative;
+}
+
+.checkout-display-row {
+    margin-bottom: 20px;
+}
+
+.checkout-total-value {
+    font-size: 32px;
+    margin: 10px 0;
+    line-height: 1;
+}
+
+.payment-input-group {
+    margin-top: 15px;
+}
+
+/* Payment input formatting like product modal */
+.payment-input-group input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 4px;
+    border-radius: 10px;
+    border: 1.5px solid #ccc;
+    outline: none;
+}
+
+/* STEP 2: RECEIPT SPECIFICS */
+.receipt-spacing {
+    line-height: 2.2; /* Proper breathing room like image_1.png */
+}
+
+.receipt-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.receipt-line strong { font-weight: normal; } /* Let modal-label handle weight */
+
+.receipt-divider {
+    border-top: 2px solid #333; /* Thick border like image_1.png */
+    margin: 15px 0;
+}
+
+.change-text {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* Modal Button tweaks from provided style */
+.finalize-margin {
+    margin-top: 15px;
+}
+
+.finalize-btn {
+    padding: 12px 60px;
+    border-radius: 25px; /* Pill button like provided style */
+}
+
+/* Layout helpers for clarity */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.header-center { justify-content: center; }
+.action-center { justify-content: center; }
+.no-border { border-bottom: none; }
+
+/* Receipt Specific Layout */
+.receipt-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between rows */
+    padding: 20px 10px;
+}
+
+.receipt-row {
+    display: flex;
+    justify-content: space-between; /* Pushes label left, value right */
+    align-items: center;
+}
+
+.receipt-value {
+    font-weight: 700;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Aligning the DONE button to the right */
+.action-right {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.done-btn {
+    padding: 10px 40px;
+    border-radius: 25px;
+    min-width: 120px;
+}
+
+/* Resetting inner container for the receipt look */
+.inner-form-container.receipt-body {
+    background: transparent; /* Makes it look seamless like the image */
+    border: none;
+}

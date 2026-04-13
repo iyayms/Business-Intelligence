@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Product - Inventory</title>
+    <link rel="stylesheet" href="purchaseproduct.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="ph ph-storefront"></i> STORE
+            </div>
+            <ul>
+                <li><i class="ph ph-squares-four"></i> Dashboard</li>
+                <li><i class="ph ph-chart-line-up"></i> Sales Overview</li>
+                <li><i class="ph ph-package"></i> Stocks</li>
+                <li><i class="ph ph-clock-counter-clockwise"></i> Order History</li>
+                <li><i class="ph ph-currency-circle-dollar"></i> Profits</li>
+                
+                <li class="menu-item has-submenu" id="inventoryToggle">
+                    <div class="menu-content">
+                        <i class="ph ph-clipboard-text"></i> 
+                        <span>Inventory</span>
+                    </div>
+                    <i class="ph ph-caret-down dropdown-icon"></i>
+                </li>
+                
+                <ul class="submenu" id="inventorySubmenu">
+                    <li>Add Product</li>
+                    <li>Add Stock</li>
+                    <li class="active-sub">Purchase Product</li>
+                    <li>New Purchase Order</li>
+                </ul>
+
+                <li><i class="ph ph-user"></i> Profile</li>
+                <li><i class="ph ph-gear"></i> Settings</li>
+                <li><i class="ph ph-sign-out"></i> Logout</li>
+                <li><i class="ph ph-question"></i> Help & Support</li>
+            </ul>
+        </nav>
+
+        <main class="main">
+            <header class="header">
+                <div>
+                    <h2>Inventory</h2>
+                    <p style="font-size: 12px; color: #666;">Manage products, stocks, and suppliers</p>
+                </div>
+                <div class="input-icon">
+                    <span><i class="ph ph-magnifying-glass"></i></span>
+                    <input type="text" placeholder="Search here">
+                </div>
+            </header>
+
+            <div class="tables-container">
+                <div class="table-title">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <button class="back-btn"><i class="ph ph-arrow-left"></i></button>
+                        <h1 class="title-text">PURCHASE PRODUCT</h1>
+                    </div>
+                    <button class="add-btn">
+                        <span class="icon">+</span> ADD PRODUCT
+                    </button>
+                </div>
+
+                <div class="purchase-info">
+                    <p><strong>Date & Time:</strong> <span id="current-time"></span></p>
+                    <div class="filter-bar">
+                        <div class="input-icon">
+                            <span><i class="ph ph-magnifying-glass"></i></span>
+                            <input type="text" placeholder="Search product">
+                        </div>
+                        <select>
+                            <option>All Categories</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>NO</th>
+                                <th>Product</th>
+                                <th>Size</th>
+                                <th>Category</th>
+                                <th>QTY</th>
+                                <th>Price</th>
+                                <th>Amount</th>
+                                <th style="text-align: center;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="purchase-list">
+                            </tbody>
+                    </table>
+                </div>
+
+                <div class="footer-actions">
+                    <div class="total-section">
+                        <strong>Total Amount:</strong>
+                        <span id="total-amount">0.00</span>
+                    </div>
+                    <button class="checkout-btn">CHECK OUT</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+<div id="productModal" class="modal">
+    <div class="modal-content product-modal">
+        <div class="modal-header">
+            <h3 id="modalTitle">ADD PRODUCT</h3>
+            
+            <button class="apply-btn" id="applyProduct">APPLY</button>
+        </div>
+        
+        <div class="modal-body">
+            <div class="input-group">
+                <label>PRODUCT NAME:</label>
+                <input type="text" id="modalProductName" list="productSuggestions" placeholder="Enter name (EX. RED H)">
+                <datalist id="productSuggestions">
+                    <option value="RED HORSE 30g">
+                    <option value="Towel Large">
+                    <option value="Tissue 1 roll">
+                </datalist>
+            </div>
+
+            <div class="readonly-fields">
+                <p><strong>PRICE:</strong> <span id="modalPrice">--</span></p>
+                <p><strong>CATEGORY:</strong> <span id="modalCategory">--</span></p>
+                <p><strong>BAR CODE:</strong> <span id="modalBarCode">--</span></p>
+            </div>
+
+            <div class="input-group row">
+                <label>QUANTITY:</label>
+                <input type="number" id="modalQty" placeholder="Enter quantity" min="1">
+                <div class="total-display">
+                    <strong>TOTAL AMOUNT:</strong> 
+                    <span id="modalTotal">0.00</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="apply-btn" id="applyProduct">APPLY</button>
+        </div>
+    </div>
+</div>
+
+<div id="confirmModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>CONFIRM ACTION</h3>
+        </div>
+        
+        <div class="inner-form-container">
+            <p>Are you sure you want to remove this product from the list?</p>
+            <label>This item will be deleted from your current order.</label>
+        </div>
+
+        <div class="modal-actions">
+            <button id="cancelRemove" class="modal-btn">NO</button>
+            <button id="proceedRemove" class="modal-btn save">YES, REMOVE</button>
+        </div>
+    </div>
+</div>
+
+<div id="checkOutModal" class="modal">
+    <div class="modal-content checkout-size text-center">
+        <button class="close-btn modal-close-icon" onclick="closeCheckoutModal()">&times;</button>
+        
+        <div class="modal-header header-center no-border">
+            <h3 class="modal-title-text">CHECK OUT</h3>
+        </div>
+        
+        <div class="inner-form-container">
+            <div class="checkout-display-row">
+                <p class="modal-label">TOTAL AMOUNT:</p>
+                <h1 class="checkout-total-value highlight-qty" id="checkoutTotal">0.00</h1>
+            </div>
+            
+            <div class="payment-input-group text-left">
+                <label class="modal-label">PAYMENT</label>
+                <input type="number" id="paymentInput" placeholder="ENTER AMOUNT" min="0" step="0.01">
+            </div>
+        </div>
+
+        <div class="modal-actions action-center">
+            <button id="proceedToReceipt" class="modal-btn save">PROCEED</button>
+        </div>
+    </div>
+</div>
+
+<div id="proceedModal" class="modal">
+    <div class="modal-content checkout-size">
+        <button class="modal-close-icon" onclick="closeProceedModal()">&times;</button>
+
+        <div class="modal-header no-border">
+            <h3 class="modal-title-text">CHECK OUT</h3>
+        </div>
+        
+        <div class="inner-form-container receipt-body">
+            <div class="receipt-row">
+                <span class="modal-label">TOTAL AMOUNT:</span>
+                <span id="receiptTotal" class="receipt-value">0.00</span>
+            </div>
+            
+            <div class="receipt-row">
+                <span class="modal-label">PAYMENT:</span>
+                <span id="receiptPayment" class="receipt-value">0.00</span>
+            </div>
+            
+            <div class="receipt-row">
+                <span class="modal-label">CHANGE:</span>
+                <span id="receiptChange" class="receipt-value highlight-qty">0.00</span>
+            </div>
+        </div>
+
+        <div class="modal-actions action-right">
+            <button id="finalizeOrder" class="modal-btn save done-btn">DONE</button>
+        </div>
+    </div>
+</div>
+
+<div id="successModal" class="modal">
+    <div class="modal-content checkout-size text-center">
+        <div class="modal-header header-center no-border">
+            <h3 class="modal-title-text">TRANSACTION COMPLETE</h3>
+        </div>
+        
+        <div class="inner-form-container">
+            <div class="success-icon" style="font-size: 50px; color: #2f5b4a; margin-bottom: 10px;">
+                <i class="ph-fill ph-check-circle"></i>
+            </div>
+            <p><strong>Success!</strong></p>
+            <div class="spacer" style="height: 10px;"></div>
+            <label>The purchase order has been processed and saved to history.</label>
+        </div>
+
+        <div class="modal-actions action-center">
+            <button id="closeSuccess" class="modal-btn save" style="width: 100%;">BACK TO INVENTORY</button>
+        </div>
+    </div>
+</div>
+
+    <script src="purchaseproduct.js"></script>
+</body>
+</html>
