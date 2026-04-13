@@ -1,286 +1,173 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Segoe UI;
+* {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-body{
-background:#f1f1f1;
+body { background: #f1f1f1; }
+.container { display: flex; height: 100vh; }
+
+/* SIDEBAR - Matches Add Stock */
+.sidebar { width: 240px; background: #2f5b4a; color: white; padding: 20px; overflow-y: auto; }
+.logo { font-size: 24px; font-weight: bold; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; color: #e4b861; }
+.sidebar ul { list-style: none; }
+.sidebar li { padding: 10px 15px; margin: 4px 0; cursor: pointer; border-radius: 25px; transition: 0.3s; display: flex; align-items: center; gap: 10px; font-size: 14px; }
+.sidebar li:hover { background: #254739; }
+
+.menu-item { display: flex; justify-content: space-between; align-items: center; }
+.menu-content { display: flex; align-items: center; gap: 10px; }
+
+/* SUBMENU */
+.submenu { list-style: none; padding-left: 45px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+.submenu.open { max-height: 500px; margin-bottom: 10px; }
+.submenu li { font-size: 13px; padding: 8px 0; opacity: 0.8; }
+.submenu li:hover { opacity: 1; color: #e4b861; }
+.dropdown-icon { transition: transform 0.3s ease; }
+.dropdown-icon.rotate { transform: rotate(180deg); }
+
+/* Active main menu item (Inventory) */
+.active-nav {
+    background: #e4b861 !important;
+    color: black !important;
+    font-weight: bold;
 }
 
-.container{
-display:flex;
-height:100vh;
+/* Ensure icons inside the active nav also turn black */
+.active-nav i {
+    color: black !important;
 }
 
-
-/* SIDEBAR */
-
-.sidebar{
-width:220px;
-background:#2f5b4a;
-color:white;
-padding:25px;
+/* Maintain hover effect for other items */
+.sidebar li:hover:not(.active-nav) {
+    background: #254739;
 }
 
-.logo{
-font-size:20px;
-font-weight:bold;
-margin-bottom:25px;
+/* MAIN AREA */
+.main { flex: 1; padding: 30px; overflow-y: auto; }
+
+.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+.header h2 { color: #2f5b4a; font-weight: 800; }
+
+/* ROUNDED INPUTS */
+.input-icon { position: relative; }
+.input-icon span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #888; display: flex; align-items: center; }
+.input-icon input {
+    width: 280px; padding: 10px 15px 10px 35px;
+    border-radius: 25px; border: 1px solid #bbb; outline: none; font-size: 14px;
 }
 
-.sidebar ul{
-list-style:none;
+/* TABLES CONTAINER */
+.tables-container {
+    background: white; padding: 30px; border-radius: 20px;
+    border: 2px solid black; min-height: 80vh;
 }
 
-.sidebar li{
-padding:10px 12px;
-margin:6px 0;
-cursor:pointer;
-border-radius:20px;
+.title-text { font-size: 22px; font-weight: 900; color: #2f5b4a; text-transform: uppercase; margin-bottom: 20px; }
+
+/* ACTIONS & FILTERS */
+/* Styling to match the Add Stock buttons */
+.actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+    flex-wrap: wrap; /* Allows buttons to wrap on smaller screens */
 }
 
-.sidebar li:hover{
-background:#254739;
+.add-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    border: 2px solid black;
+    border-radius: 25px;
+    padding: 8px 18px;
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 12px;
+    transition: 0.2s;
 }
 
-.sidebar .active{
-background:#e4b861;
-color:black;
+.add-btn:hover {
+    background: #f1f1f1;
+    transform: translateY(-1px);
 }
 
-.submenu{
-list-style:none;
-margin-left:20px;
-margin-bottom:10px;
+.add-btn .icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
 }
 
-.submenu li{
-font-size:14px;
-padding:8px 10px;
-opacity:0.9;
+.filter-bar { display: flex; gap: 10px; margin-bottom: 25px; }
+.filter-bar select { border-radius: 25px; padding: 8px 15px; border: 1px solid #bbb; outline: none; }
+
+/* GRID LAYOUT */
+.tables-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.table-box { border: 1px solid #ddd; border-radius: 12px; overflow: hidden; background: #fff; }
+
+.table-title {
+    background: #e4b861; padding: 10px 15px; font-weight: bold;
+    display: flex; justify-content: space-between; align-items: center; font-size: 14px;
 }
 
-.submenu li:hover{
-background:#254739;
-border-radius:15px;
+.view { border: none; background: none; cursor: pointer; font-weight: bold; font-size: 12px; }
+
+/* TABLE STYLES */
+.table-scroll { max-height: 250px; overflow-y: auto; }
+table { width: 100%; border-collapse: collapse; }
+th { position: sticky; top: 0; background: #f9f9f9; text-align: left; padding: 10px; font-size: 12px; border-bottom: 2px solid #eee; }
+td { padding: 10px; font-size: 13px; border-bottom: 1px solid #eee; }
+
+/* Ensure table rows have a consistent height and vertical alignment */
+table tbody tr td {
+    vertical-align: middle;
+    height: 45px;
 }
 
-
-/* MAIN */
-
-.main{
-flex:1;
-padding:30px;
+/* Status Pill Styling */
+.status-pill {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
 }
 
-
-/* HEADER */
-
-.header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:20px;
+.status-pill.pending {
+    background: #fff4e5;
+    color: #b07d00;
+    border: 1px solid #ffcc00;
 }
 
-.header input{
-width:250px;
-padding:10px 15px;
-border-radius:25px;
-border:1px solid #bbb;
+.status-pill.delivery {
+    background: #e5f1ff;
+    color: #0056b3;
+    border: 1px solid #007bff;
 }
 
-
-
-/* ACTION BUTTONS */
-
-.actions{
-display:flex;
-gap:10px;
-margin-bottom:20px;
+.status-pill.delivered {
+    background: #e6ffed;
+    color: #1a7f37;
+    border: 1px solid #2da44e;
 }
 
-.actions button{
-
-padding:10px 16px;
-border:none;
-border-radius:20px;
-background:white;
-cursor:pointer;
-font-weight:600;
-box-shadow:0 2px 4px rgba(0,0,0,0.1);
-
+/* Fix for table box alignment */
+.table-box {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #000; /* Matching the "Add Stock" border style */
+    border-radius: 12px;
 }
 
-.actions button:hover{
-background:#e4b861;
+.table-scroll {
+    flex-grow: 1;
 }
 
-
-
-/* SECTION TITLE */
-
-.sectionTitle{
-margin:15px 0;
-}
-
-
-
-/* GRID */
-
-.tables-grid{
-
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
-
-}
-
-/* MAIN TABLE CONTAINER */
-
-.tables-container{
-
-background:white;
-padding:20px;
-border-radius:14px;
-box-shadow:0 3px 8px rgba(0,0,0,0.1);
-
-}
-
-/* TABLE BOX */
-
-.table-box{
-
-background:white;
-border-radius:12px;
-padding:15px;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
-
-}
-
-/* TABLE BOX */
-
-.table-box{
-
-background:#fff;
-border-radius:10px;
-padding:10px;
-box-shadow:0 2px 5px rgba(0,0,0,0.1);
-
-}
-
-/* TABLE TITLE */
-
-.table-title{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:#e4b861;
-padding:8px 12px;
-border-radius:8px;
-margin-bottom:10px;
-font-weight:bold;
-
-}
-
-.view{
-border:none;
-background:none;
-cursor:pointer;
-font-weight:bold;
-}
-
-
-
-/* FILTER HEADER */
-
-.table-header{
-
-display:flex;
-gap:10px;
-margin-bottom:10px;
-flex-wrap:wrap;
-
-}
-
-.table-header input,
-.table-header select{
-
-padding:6px 10px;
-border-radius:10px;
-border:1px solid #bbb;
-
-}
-
-/* FILTER BAR */
-
-.filter-bar{
-
-display:flex;
-gap:10px;
-margin-bottom:20px;
-flex-wrap:wrap;
-
-}
-
-.filter-bar input,
-.filter-bar select{
-
-padding:8px 12px;
-border-radius:10px;
-border:1px solid #bbb;
-
-}
-
-/* SCROLL AREA */
-
-.table-scroll{
-
-max-height:220px;
-overflow-y:auto;
-
-}
-
-/* STICKY HEADER */
-
-thead th{
-
-position:sticky;
-top:0;
-background:#e4b861;
-z-index:2;
-
-}
-
-
-/* TABLE */
-
-table{
-
-width:100%;
-border-collapse:collapse;
-
-}
-
-th,td{
-
-padding:8px;
-border-bottom:1px solid #ddd;
-font-size:14px;
-
-}
-
-.lowStock{
-background:#ffefef;
-color:#c40000;
-font-weight:bold;
-animation:blink 1.2s infinite alternate;
-}
-
-@keyframes blink{
-from{opacity:1;}
-to{opacity:0.5;}
-}
+.lowStock { background: #ffefef; color: #c40000; font-weight: bold; animation: blink 1.2s infinite alternate; }
+@keyframes blink { from { opacity: 1; } to { opacity: 0.5; } }

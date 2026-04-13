@@ -1,246 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Inventory</title>
-<link rel="stylesheet" href="inventory.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory - Management</title>
+    <link rel="stylesheet" href="inventory.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
-
 <body>
 
 <div class="container">
-
-<div class="sidebar">
-
-<div class="logo">🧾 STORE</div>
-
-<ul>
-
-<li>Dashboard</li>
-<li>Sales Overview</li>
-<li>Stocks</li>
-<li>Order History</li>
-<li>Profits</li>
-
-<li class="active">Inventory</li>
-
-<ul class="submenu">
-<li onclick="openProduct()">Add Product</li>
-<li onclick="addStock()">Add Stock</li>
-<li onclick="purchaseProduct()">Purchase Product</li>
-<li onclick="newPO()">New Purchase Order</li>
-</ul>
-
-<li>Profile</li>
-<li>Settings</li>
-<li>Logout</li>
-<li>Help & Support</li>
-
-</ul>
-
-</div>
-
-
-<!-- MAIN -->
-<div class="main">
-
-<!-- HEADER -->
-<div class="header">
-
-<h1>Inventory</h1>
-
-<input type="text" placeholder="Search here">
-
-</div>
-
-
-<!-- ACTION BUTTONS -->
-<div class="actions">
-
-<button onclick="openProduct()">+ Add/Edit Product</button>
-<button onclick="addStock()">+ Add Stock</button>
-<button onclick="newPO()">+ New Purchase Order</button>
-<button onclick="purchaseProduct()">+ Purchase Product</button>
-
-</div>
-
-
-<h3 class="sectionTitle">Quick Actions</h3>
-
-
-<div class="tables-container">
-
-<div class="filter-bar">
-
-<input id="searchProduct" placeholder="Search product">
-
-<select id="categoryFilter">
-<option>All Categories</option>
-<option>Beverages</option>
-<option>Snacks</option>
-<option>Hygiene</option>
-<option>Cigarettes</option>
-</select>
-
-<select id="supplierFilter">
-<option>All Suppliers</option>
-<option>ABC Beverages</option>
-<option>XYZ Snacks</option>
-<option>Fresh Goods</option>
-<option>Metro Supplies</option>
-</select>
-
-<select id="statusFilter">
-<option>All Statuses</option>
-<option>In Stock</option>
-<option>Low Stock</option>
-<option>Out of Stock</option>
-</select>
-
-</div>
-
-
-<div class="tables-grid">
-
-<!-- RECENT PRODUCTS -->
-<div class="table-box">
-
-<div class="table-title">
-Recent Products
-<button class="view">View All →</button>
-</div>
-
-<div class="table-scroll">
-
-<table>
-<thead>
-<tr>
-<th>Product</th>
-<th>Category</th>
-<th>Quantity</th>
-<th>Cost</th>
-</tr>
-</thead>
-
-<tbody id="productTable"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-
-
-<!-- SUPPLIERS -->
-<div class="table-box">
-
-<div class="table-title">
-Suppliers
-<button class="view">View All →</button>
-</div>
-
-<div class="table-scroll">
-
-<table>
-
-<thead>
-<tr>
-<th>Supplier</th>
-<th>Contact</th>
-<th>Phone</th>
-</tr>
-</thead>
-
-<tbody id="supplierTable"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-
-
-<!-- RECENT ACTIVITY -->
-<div class="table-box">
-
-<div class="table-title">
-Recent Activity
-<button class="view">View All →</button>
-</div>
-
-<div class="table-scroll">
-
-<table>
-
-<thead>
-<tr>
-<th>Activity</th>
-<th>Category</th>
-<th>Date</th>
-</tr>
-</thead>
-
-<tbody>
-
-<tr><td>Restocked Coca Cola</td><td>Beverages</td><td>May 1</td></tr>
-<tr><td>Added product: Shampoo</td><td>Hygiene</td><td>May 2</td></tr>
-<tr><td>Purchased Chips</td><td>Snacks</td><td>May 3</td></tr>
-<tr><td>Restocked Pepsi</td><td>Beverages</td><td>May 4</td></tr>
-<tr><td>Added Soap</td><td>Hygiene</td><td>May 5</td></tr>
-<tr><td>Purchased Beer</td><td>Beverages</td><td>May 6</td></tr>
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-
-
-<!-- ORDER STATUS -->
-<div class="table-box">
-
-<div class="table-title">
-Order Status
-<button class="view">View All →</button>
-</div>
-
-<div class="table-scroll">
-
-<table>
-
-<thead>
-<tr>
-<th>Product</th>
-<th>Category</th>
-<th>Qty</th>
-<th>Cost</th>
-<th>Status</th>
-</tr>
-</thead>
-
-<tbody>
-
-<tr><td>Mighty Blue</td><td>Cigarettes</td><td>5 Packs</td><td>700</td><td>Pending</td></tr>
-<tr><td>San Miguel Light</td><td>Beverages</td><td>5 Cases</td><td>3000</td><td>For Delivery</td></tr>
-<tr><td>Coca Cola</td><td>Beverages</td><td>10 Cases</td><td>4000</td><td>Delivered</td></tr>
-<tr><td>Potato Chips</td><td>Snacks</td><td>20 Boxes</td><td>2500</td><td>Pending</td></tr>
-<tr><td>Soap</td><td>Hygiene</td><td>100 pcs</td><td>800</td><td>Delivered</td></tr>
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</div>
-
+    <nav class="sidebar">
+        <div class="logo"><i class="ph ph-storefront"></i> STORE</div>
+        <ul>
+            <li><i class="ph ph-squares-four"></i> Dashboard</li>
+            <li><i class="ph ph-chart-line-up"></i> Sales Overview</li>
+            <li><i class="ph ph-package"></i> Stocks</li>
+            <li><i class="ph ph-clock-counter-clockwise"></i> Order History</li>
+            <li><i class="ph ph-currency-circle-dollar"></i> Profits</li>
+            
+            <li class="menu-item has-submenu active-nav" id="inventoryToggle" style="background: #e4b861; color: black; font-weight: bold;">
+                <div class="menu-content">
+                    <i class="ph ph-clipboard-text"></i> 
+                    <span>Inventory</span>
+                </div>
+                <i class="ph ph-caret-down dropdown-icon rotate"></i> 
+            </li>
+
+            <ul class="submenu open" id="inventorySubmenu"> 
+                <li onclick="location.href='addproduct.html'">Add Product</li>
+                <li onclick="location.href='addstock.html'">Add Stock</li>
+                <li onclick="purchaseProduct()">Purchase Product</li>
+                <li onclick="newPO()">New Purchase Order</li>
+            </ul>
+
+            <li><i class="ph ph-user"></i> Profile</li>
+            <li><i class="ph ph-gear"></i> Settings</li>
+            <li><i class="ph ph-sign-out"></i> Logout</li>
+        </ul>
+    </nav>
+
+    <div class="main">
+        <header class="header">
+            <div>
+                <h2>Inventory</h2>
+                <p style="font-size: 12px; color: #666;">Manage products, stocks, and suppliers</p>
+            </div>
+            <div class="input-icon">
+                <span><i class="ph ph-magnifying-glass"></i></span>
+                <input type="text" id="globalTopSearch" placeholder="Search here">
+            </div>
+        </header>
+
+        <div class="tables-container">
+            <h1 class="title-text">Quick Actions</h1>
+            
+            <div class="actions">
+                <button class="add-btn" onclick="openProduct()">
+                    <span class="icon">+</span> ADD/EDIT PRODUCT
+                </button>
+                
+                <button class="add-btn" onclick="addStock()">
+                    <span class="icon">+</span> ADD STOCK
+                </button>
+                
+                <button class="add-btn" onclick="newPO()">
+                    <span class="icon">+</span> NEW PURCHASE ORDER
+                </button>
+                
+                <button class="add-btn" onclick="purchaseProduct()">
+                    <span class="icon">+</span> PURCHASE PRODUCT
+                </button>
+            </div>
+
+            <div class="filter-bar">
+                <div class="input-icon">
+                    <span><i class="ph ph-magnifying-glass"></i></span>
+                    <input type="text" id="searchProduct" placeholder="Search product">
+                </div>
+                <select id="categoryFilter">
+                    <option>All Categories</option>
+                    <option>Beverages</option>
+                    <option>Snacks</option>
+                    <option>Hygiene</option>
+                </select>
+                <select id="statusFilter">
+                    <option>All Statuses</option>
+                    <option>In Stock</option>
+                    <option>Low Stock</option>
+                </select>
+            </div>
+
+            <div class="tables-grid">
+                <div class="table-box">
+                    <div class="table-title">
+                        <span>Recent Products</span>
+                        <button class="view">View All →</button>
+                    </div>
+                    <div class="table-scroll">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Category</th>
+                                    <th>Qty</th>
+                                    <th>Cost</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="table-box">
+                    <div class="table-title">
+                        <span>Suppliers</span>
+                        <button class="view">View All →</button>
+                    </div>
+                    <div class="table-scroll">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Supplier</th>
+                                    <th>Contact</th>
+                                    <th>Phone</th>
+                                </tr>
+                            </thead>
+                            <tbody id="supplierTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="table-box">
+                    <div class="table-title">
+                        <span>Recent Activity</span>
+                        <button class="view">View All →</button>
+                    </div>
+                    <div class="table-scroll">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Activity</th>
+                                    <th>Category</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Restocked Coca Cola</td><td>Beverages</td><td>May 1, 2026</td></tr>
+                                <tr><td>Added product: Shampoo</td><td>Hygiene</td><td>May 2, 2026</td></tr>
+                                <tr><td>Purchased Chips</td><td>Snacks</td><td>May 3, 2026</td></tr>
+                                <tr><td>Restocked Pepsi</td><td>Beverages</td><td>May 4, 2026</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="table-box">
+                    <div class="table-title">
+                        <span>Order Status</span>
+                        <button class="view">View All →</button>
+                    </div>
+                    <div class="table-scroll">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Qty</th>
+                                    <th>Cost</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mighty Blue</td>
+                                    <td>5 Packs</td>
+                                    <td>700</td>
+                                    <td><span class="status-pill pending">Pending</span></td>
+                                </tr>
+                                <tr>
+                                    <td>SM Light</td>
+                                    <td>5 Cases</td>
+                                    <td>3000</td>
+                                    <td><span class="status-pill delivery">For Delivery</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Coca Cola</td>
+                                    <td>10 Cases</td>
+                                    <td>4000</td>
+                                    <td><span class="status-pill delivered">Delivered</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 </div>
 
 <script src="inventory.js"></script>

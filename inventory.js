@@ -90,23 +90,24 @@ table.innerHTML += row
 
 }
 
+const invToggle = document.getElementById("inventoryToggle");
+if (invToggle) {
+    invToggle.addEventListener("click", function() {
+        const submenu = document.getElementById("inventorySubmenu");
+        const icon = this.querySelector(".dropdown-icon");
+        if (submenu) submenu.classList.toggle("open");
+        if (icon) icon.classList.toggle("rotate");
+    });
+}
 
-
-document.getElementById("searchProduct").addEventListener("keyup",function(){
-
-let search = this.value.toLowerCase()
-
-let rows = document.querySelectorAll("#productTable tr")
-
-rows.forEach(row=>{
-
-let name = row.children[0].textContent.toLowerCase()
-
-row.style.display = name.includes(search) ? "" : "none"
-
-})
-
-})
+document.getElementById("searchProduct").addEventListener("keyup", function() {
+    let search = this.value.toLowerCase();
+    let rows = document.querySelectorAll("#productTable tr");
+    rows.forEach(row => {
+        let name = row.children[0].textContent.toLowerCase();
+        row.style.display = name.includes(search) ? "" : "none";
+    });
+});
 
 
 
