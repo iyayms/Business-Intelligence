@@ -1,119 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Store Profit Dashboard</title>
-
-<link rel="stylesheet" href="profits.css">
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profits - Inventory System</title>
+    <link rel="stylesheet" href="profits.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
 
-<div class="sidebar">
-<div class="logo">STORE</div>
-<ul class="menu">
-<li>Dashboard</li>
-<li>Sales Overview</li>
-<li>Stocks</li>
-<li>Order History</li>
-<li class="active">Profits</li>
-<li>Inventory</li>
-</ul>
-</div>
+<div class="container">
+    <nav class="sidebar">
+        <div class="logo"><i class="ph ph-storefront"></i> STORE</div>
+        <ul>
+            <li><i class="ph ph-squares-four"></i> Dashboard</li>
+            <li><i class="ph ph-chart-line-up"></i> Sales Overview</li>
+            <li><i class="ph ph-package"></i> Stocks</li>
+            <li><i class="ph ph-clock-counter-clockwise"></i> Order History</li>
+            <li class="active"><i class="ph ph-currency-circle-dollar"></i> Profits</li>
+            <li class="menu-item has-submenu" id="inventoryToggle">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="ph ph-clipboard-text"></i> <span>Inventory</span>
+                </div>
+                <i class="ph ph-caret-down dropdown-icon"></i>
+            </li>
+            <ul class="submenu" id="inventorySubmenu">
+                <li onclick="location.href='addproduct.html'">Add Product</li>
+                <li onclick="location.href='addstock.html'">Add Stock</li>
+                <li>Purchase Product</li>
+                <li>New Purchase Order</li>
+            </ul>
+        </ul>
+    </nav>
 
-<div class="main">
+    <div class="main">
+        <header class="header">
+            <div>
+                <h2>Profits</h2>
+                <p style="font-size: 12px; color: #666;">Monitor earnings and product performance</p>
+            </div>
+            <div class="input-icon">
+                <span><i class="ph ph-magnifying-glass"></i></span>
+                <input type="text" id="search" placeholder="Search category">
+            </div>
+        </header>
 
-<div class="top">
-<h1>Profits</h1>
-<input id="search" class="search" placeholder="Search category">
-</div>
+        <div id="dashboardView">
+            <div class="headerRow">
+                <div class="filter-bar" style="display: flex; gap: 10px;">
+                    <select id="filter">
+                        <option value="all">All Margins</option>
+                        <option value="low">Below 5%</option>
+                        <option value="mid">5-10%</option>
+                        <option value="high">Above 10%</option>
+                    </select>
+                    <select id="profitRange" onchange="updateStoreProfit()">
+                        <option value="daily">Daily Profit</option>
+                        <option value="weekly">Weekly Profit</option>
+                        <option value="monthly">Monthly Profit</option>
+                    </select>
+                </div>
+            </div>
 
-<div class="controls">
+            <div class="totalStore" id="storeProfit"></div>
+            <div class="cards" id="grid"></div>
+        </div>
 
-<select id="filter">
-<option value="all">All</option>
-<option value="low">Below 5%</option>
-<option value="mid">5-10%</option>
-<option value="high">Above 10%</option>
-</select>
+        <div id="tableView" style="display: none;">
+            <div class="tables-container">
+                <div class="headerRow">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <button class="back-btn" onclick="showCards()">
+                            <i class="ph ph-arrow-left"></i>
+                        </button>
+                        <h1 class="title-text" id="categoryTitle">CATEGORY NAME</h1>
+                    </div>
+                    <div class="reportWrap" style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 12px; font-weight: 800;">REPORT:</span>
+                        <select id="reportType" onchange="reloadTable()">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                        </select>
+                    </div>
+                </div>
 
-<select id="profitRange" onchange="updateStoreProfit()">
-<option value="daily">Daily Profit</option>
-<option value="weekly">Weekly Profit</option>
-<option value="monthly">Monthly Profit</option>
-</select>
+                <div class="stats-bar">
+                    <div class="stat-item" id="topProduct">Top Product: --</div>
+                    <div class="stat-item highlight" id="summary">TOTAL PROFIT: ₱0</div>
+                </div>
 
-</div>
+                <div class="tableContainer">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Size</th>
+                                <th>SRP</th>
+                                <th>Price</th>
+                                <th>Sales</th>
+                                <th>Profit</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
 
-<div class="totalStore" id="storeProfit"></div>
+                <div class="charts-wrapper">
 
-<div class="cards" id="grid"></div>
+                    <div class="chartBox bigChart">
+                        <h3><i class="ph ph-chart-bar"></i> Profit per Product</h3>
+                        <canvas id="profitChart"></canvas>
+                    </div>
+                    
+                    <div class="chartBox smallChart">
+                        <h3><i class="ph ph-crown"></i> Top 5 Profitable</h3>
+                        <canvas id="topChart"></canvas>
+                    </div>
 
-<div id="tableView">
+                    <div class="chartBox smallChart">
+                        <h3><i class="ph ph-chart-line"></i> Profit Trend</h3>
+                        <canvas id="trendChart"></canvas>
+                    </div>
 
-<div class="headerRow">
-
-<div>
-<button onclick="showCards()">←</button>
-<span id="categoryTitle"></span>
-</div>
-
-<div class="reportWrap">
-<span class="reportLabel">Frequency Report</span>
-<select id="reportType" class="reportBtn" onchange="reloadTable()">
-<option value="daily">Daily</option>
-<option value="weekly">Weekly</option>
-<option value="monthly">Monthly</option>
-</select>
-</div>
-
-</div>
-
-<div class="topProduct" id="topProduct"></div>
-<div class="summary" id="summary"></div>
-
-<div class="tableContainer">
-<table>
-<thead>
-<tr>
-<th>Product</th>
-<th>Size</th>
-<th>SRP</th>
-<th>Price</th>
-<th>Sales</th>
-<th>Profit</th>
-</tr>
-</thead>
-<tbody id="tableBody"></tbody>
-</table>
-</div>
-
-<div class="chartBox">
-<h3>Profit per Product</h3>
-<canvas id="profitChart"></canvas>
-</div>
-
-<div class="chartBox">
-<h3>Top 5 Most Profitable Products</h3>
-<canvas id="topChart"></canvas>
-</div>
-
-<div class="chartBox">
-<h3>Profit Trend</h3>
-<canvas id="trendChart"></canvas>
-</div>
-
-<div class="chartBox">
-<h3>Profit Distribution by Category</h3>
-<canvas id="categoryChart"></canvas>
-</div>
-
-</div>
-</div>
+                </div>
+                </div>
+            </div> <!-- tables-container -->
+        </div> <!-- tableView -->
+    </div> <!-- main -->
+</div> <!-- container -->
 
 <script src="profits.js"></script>
-
 </body>
 </html>
